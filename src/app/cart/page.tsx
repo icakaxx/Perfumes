@@ -258,7 +258,7 @@ export default function CartPage() {
 
           {/* Order Summary */}
           <div className="w-full sm:max-w-md sm:mx-auto">
-            <Card className="sticky bottom-4 sm:static sm:bottom-auto">
+            <Card className="sticky bottom-4 sm:static sm:bottom-auto border-2 border-blue-500 bg-blue-50">
               <CardHeader className="pb-3 sm:pb-6">
                 <CardTitle className="text-lg sm:text-xl">Обобщение на поръчката</CardTitle>
               </CardHeader>
@@ -275,8 +275,8 @@ export default function CartPage() {
                 
                 <div className="space-y-2 sm:space-y-3 pt-2">
                   <Link href="/order" className="block">
-                    <Button className="w-full bg-accent hover:bg-accent/90 text-white text-sm sm:text-base py-3 sm:py-2">
-                      Продължи към поръчка
+                    <Button className="w-full bg-red-600 hover:bg-red-700 text-white text-sm sm:text-base py-4 sm:py-2 font-bold border-2 border-red-800">
+                      🛒 ПРОДЪЛЖИ КЪМ ПОРЪЧКА 🛒
                     </Button>
                   </Link>
                   
