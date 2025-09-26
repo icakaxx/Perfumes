@@ -42,10 +42,10 @@ export function FiltersSheet({
   const concentrations = ["EDT", "EDP", "PARFUM"];
   const genderProfiles = ["Feminine", "Masculine", "Unisex"];
   const sortOptions = [
-    { value: "featured", label: "Featured" },
-    { value: "price-asc", label: "Price: Low to High" },
-    { value: "price-desc", label: "Price: High to Low" },
-    { value: "rating", label: "Highest Rated" },
+    { value: "featured", label: "Препоръчани" },
+    { value: "price-asc", label: "Цена: Ниска към Висока" },
+    { value: "price-desc", label: "Цена: Висока към Ниска" },
+    { value: "rating", label: "Най-високо оценени" },
   ];
 
   const updateFilter = <K extends keyof FilterState>(
@@ -90,14 +90,14 @@ export function FiltersSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto">
         <SheetHeader>
-          <SheetTitle>Filters</SheetTitle>
+          <SheetTitle>Филтри</SheetTitle>
         </SheetHeader>
         
         <div className="space-y-6 mt-6">
           {/* Sort By */}
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm">Sort By</CardTitle>
+              <CardTitle className="text-sm">Сортиране</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
               {sortOptions.map(option => (
@@ -119,7 +119,7 @@ export function FiltersSheet({
           {/* Price Range */}
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm">Price Range</CardTitle>
+              <CardTitle className="text-sm">Ценови диапазон</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
@@ -152,7 +152,7 @@ export function FiltersSheet({
           {/* Concentration */}
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm">Concentration</CardTitle>
+              <CardTitle className="text-sm">Концентрация</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-2">
@@ -173,7 +173,7 @@ export function FiltersSheet({
           {/* Gender Profile */}
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm">Gender Profile</CardTitle>
+              <CardTitle className="text-sm">Пол</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-2">
@@ -194,7 +194,7 @@ export function FiltersSheet({
           {/* Top Notes */}
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm">Top Notes</CardTitle>
+              <CardTitle className="text-sm">Горни ноти</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-2">
@@ -215,7 +215,7 @@ export function FiltersSheet({
           {/* Heart Notes */}
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm">Heart Notes</CardTitle>
+              <CardTitle className="text-sm">Средни ноти</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-2">
@@ -236,7 +236,7 @@ export function FiltersSheet({
           {/* Base Notes */}
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm">Base Notes</CardTitle>
+              <CardTitle className="text-sm">Основни ноти</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-2">
@@ -264,7 +264,7 @@ export function FiltersSheet({
                   onChange={(e) => updateFilter("inStockOnly", e.target.checked)}
                   className="rounded"
                 />
-                <span className="text-sm">In Stock Only</span>
+                <span className="text-sm">Само в наличност</span>
               </label>
             </CardContent>
           </Card>
@@ -272,10 +272,10 @@ export function FiltersSheet({
           {/* Actions */}
           <div className="flex gap-2 pt-4">
             <Button onClick={resetFilters} variant="outline" className="flex-1">
-              Reset
+              Нулирай
             </Button>
             <Button onClick={applyFilters} className="flex-1 bg-accent hover:bg-accent/90 text-white">
-              Apply Filters
+              Приложи филтрите
             </Button>
           </div>
         </div>

@@ -1,8 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { Instagram, Facebook, Twitter, Mail, Phone, MapPin, Settings } from "lucide-react";
+import { Instagram, Facebook, Twitter, Settings } from "lucide-react";
 import { useAdminAuth } from "@/contexts/AdminAuthContext";
+
+// Custom TikTok icon component
+const TikTokIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+  </svg>
+);
 
 export function Footer() {
   const { isAuthenticated: isAdmin } = useAdminAuth();
@@ -18,106 +25,46 @@ export function Footer() {
         <Settings className="h-6 w-6 text-white" />
       </Link>
       
-      <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div className="space-y-4">
-            <h3 className="font-serif text-xl font-bold">Luxe Parfum</h3>
-            <p className="text-sm text-muted-foreground">
-              Discover your signature scent from our curated collection of luxury fragrances.
-            </p>
-            <div className="flex space-x-4">
-              <Link href="#" className="text-muted-foreground hover:text-accent">
-                <Instagram className="h-5 w-5" />
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-accent">
-                <Facebook className="h-5 w-5" />
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-accent">
-                <Twitter className="h-5 w-5" />
-              </Link>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div className="space-y-4">
-            <h4 className="font-semibold">Quick Links</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/shop" className="text-muted-foreground hover:text-accent">
-                  All Products
-                </Link>
-              </li>
-              <li>
-                <Link href="/shop?sortBy=newest" className="text-muted-foreground hover:text-accent">
-                  New Arrivals
-                </Link>
-              </li>
-              <li>
-                <Link href="/shop?concentrations=PARFUM" className="text-muted-foreground hover:text-accent">
-                  Parfum Collection
-                </Link>
-              </li>
-              <li>
-                <Link href="/shop?inStock=true" className="text-muted-foreground hover:text-accent">
-                  In Stock Now
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Customer Service */}
-          <div className="space-y-4">
-            <h4 className="font-semibold">Customer Service</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-accent">
-                  Shipping & Returns
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-accent">
-                  Size Guide
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-accent">
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-accent">
-                  Terms & Conditions
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div className="space-y-4">
-            <h4 className="font-semibold">Contact Us</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li className="flex items-center space-x-2">
-                <Phone className="h-4 w-4" />
-                <span>+359 88 123 4567</span>
-              </li>
-              <li className="flex items-center space-x-2">
-                <Mail className="h-4 w-4" />
-                <span>hello@luxeparfum.bg</span>
-              </li>
-              <li className="flex items-start space-x-2">
-                <MapPin className="h-4 w-4 mt-0.5" />
-                <span>
-                  123 Vitosha Blvd<br />
-                  Sofia 1000, Bulgaria
-                </span>
-              </li>
-            </ul>
-          </div>
+      <div className="container py-8">
+        {/* Brand */}
+        <div className="text-center mb-6">
+          <h3 className="font-serif text-xl font-bold mb-2">Luxe Parfum</h3>
         </div>
 
-        <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
-          <p>© 2025 Luxe Parfum. All rights reserved. | Made with ❤️ in Sofia</p>
+        {/* Social Media Icons Container */}
+        <div className="flex justify-center items-center space-x-6 mb-6">
+          <Link 
+            href="#" 
+            className="text-muted-foreground hover:text-accent transition-colors duration-200"
+            title="Instagram"
+          >
+            <Instagram className="h-6 w-6" />
+          </Link>
+          <Link 
+            href="#" 
+            className="text-muted-foreground hover:text-accent transition-colors duration-200"
+            title="Facebook"
+          >
+            <Facebook className="h-6 w-6" />
+          </Link>
+          <Link 
+            href="#" 
+            className="text-muted-foreground hover:text-accent transition-colors duration-200"
+            title="Twitter"
+          >
+            <Twitter className="h-6 w-6" />
+          </Link>
+          <Link 
+            href="#" 
+            className="text-muted-foreground hover:text-accent transition-colors duration-200"
+            title="TikTok"
+          >
+            <TikTokIcon className="h-6 w-6" />
+          </Link>
+        </div>
+
+        <div className="text-center text-sm text-muted-foreground">
+          <p>© 2025 Luxe Parfum. Всички права запазени. | Направено с ❤️ в София</p>
         </div>
       </div>
     </footer>

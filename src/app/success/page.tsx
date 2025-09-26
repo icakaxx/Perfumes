@@ -42,7 +42,7 @@ export default function SuccessPage() {
     return (
       <div className="container py-16 text-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mx-auto mb-4"></div>
-        <p className="text-muted-foreground">Loading order details...</p>
+        <p className="text-muted-foreground">Зареждане на детайлите за поръчката...</p>
       </div>
     );
   }
@@ -58,10 +58,10 @@ export default function SuccessPage() {
           <CheckCircle className="h-10 w-10 text-green-600" />
         </div>
         <h1 className="font-serif text-3xl font-bold mb-2">
-          Order Confirmed!
+          Поръчката е потвърдена!
         </h1>
         <p className="text-muted-foreground">
-          Thank you for your order. We'll process it shortly.
+          Благодарим за поръчката. Ще я обработим скоро.
         </p>
       </div>
 
@@ -69,12 +69,12 @@ export default function SuccessPage() {
       <Card className="p-6 mb-6">
         <div className="space-y-4">
           <div>
-            <p className="text-sm text-muted-foreground mb-1">Order ID</p>
+            <p className="text-sm text-muted-foreground mb-1">ID на поръчката</p>
             <p className="font-mono font-semibold">{orderData.orderId}</p>
           </div>
 
           <div className="pt-4 border-t">
-            <p className="text-sm text-muted-foreground mb-3">Customer Information</p>
+            <p className="text-sm text-muted-foreground mb-3">Информация за клиента</p>
             <div className="space-y-1">
               <p className="font-medium">
                 {orderData.firstName} {orderData.middleName} {orderData.lastName}
@@ -86,19 +86,19 @@ export default function SuccessPage() {
 
           {product && variant && (
             <div className="pt-4 border-t">
-              <p className="text-sm text-muted-foreground mb-3">Product Details</p>
+              <p className="text-sm text-muted-foreground mb-3">Детайли за продукта</p>
               <div className="flex justify-between items-start">
                 <div>
                   <p className="font-medium">{product.name}</p>
                   <p className="text-sm text-muted-foreground">
-                    {product.brand} • {variant.volumeMl}ml • Qty: {orderData.quantity}
+                    {product.brand} • {variant.volumeMl}ml • Количество: {orderData.quantity}
                   </p>
                 </div>
                 <div className="text-right">
                   <p className="text-lg font-bold text-accent">
                     {formatCurrency(orderData.totalPrice)}
                   </p>
-                  <p className="text-xs text-muted-foreground">incl. VAT</p>
+                  <p className="text-xs text-muted-foreground">вкл. ДДС</p>
                 </div>
               </div>
             </div>
@@ -108,7 +108,7 @@ export default function SuccessPage() {
             <div className="flex items-center gap-2 text-sm">
               <Package className="h-4 w-4 text-muted-foreground" />
               <p>
-                Estimated delivery: <span className="font-medium">3-5 business days</span>
+                Очаквана доставка: <span className="font-medium">3-5 работни дни</span>
               </p>
             </div>
           </div>
@@ -117,23 +117,23 @@ export default function SuccessPage() {
 
       {/* What's Next */}
       <Card className="p-6 mb-6 bg-accent/5 border-accent/20">
-        <h2 className="font-semibold mb-3">What happens next?</h2>
+        <h2 className="font-semibold mb-3">Какво се случва след това?</h2>
         <ol className="space-y-2 text-sm">
           <li className="flex gap-2">
             <span className="text-accent font-bold">1.</span>
-            You'll receive an order confirmation email shortly
+            Ще получите имейл за потвърждение на поръчката скоро
           </li>
           <li className="flex gap-2">
             <span className="text-accent font-bold">2.</span>
-            We'll carefully package your perfume with our signature gift wrapping
+            Ще опаковаме внимателно вашия парфюм с нашата фирмена подаръчна опаковка
           </li>
           <li className="flex gap-2">
             <span className="text-accent font-bold">3.</span>
-            You'll get a tracking number once your order ships
+            Ще получите номер за проследяване, когато поръчката бъде изпратена
           </li>
           <li className="flex gap-2">
             <span className="text-accent font-bold">4.</span>
-            Your fragrance will arrive within 3-5 business days
+            Вашият аромат ще пристигне в рамките на 3-5 работни дни
           </li>
         </ol>
       </Card>
@@ -143,13 +143,13 @@ export default function SuccessPage() {
         <Link href="/" className="flex-1">
           <Button variant="outline" className="w-full">
             <Home className="h-4 w-4 mr-2" />
-            Back to Home
+            Начало
           </Button>
         </Link>
         <Link href="/shop" className="flex-1">
           <Button className="w-full bg-accent hover:bg-accent/90 text-white">
             <ShoppingBag className="h-4 w-4 mr-2" />
-            Continue Shopping
+            Продължи Пазаруването
           </Button>
         </Link>
       </div>

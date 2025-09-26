@@ -75,7 +75,7 @@ export default function OrderPage() {
   if (items.length === 0) {
     return (
       <div className="container py-16 text-center">
-        <p className="text-muted-foreground">Loading...</p>
+        <p className="text-muted-foreground">Зареждане...</p>
       </div>
     );
   }
@@ -135,7 +135,17 @@ export default function OrderPage() {
       // Clear cart after successful order
       clearCart();
 
-      router.push("/success");
+      // Show success notification
+      toast({
+        title: "Поръчката е успешна! 🎉",
+        description: "Вашата поръчка е приета и ще бъде обработена скоро. Ще получите потвърждение по имейл.",
+        variant: "default",
+      });
+
+      // Small delay to show the notification before redirect
+      setTimeout(() => {
+        router.push("/success");
+      }, 1500);
     } catch (error) {
       toast({
         title: "Поръчката неуспешна",
@@ -159,13 +169,13 @@ export default function OrderPage() {
       {loading && (
         <div className="text-center py-16">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mx-auto mb-4"></div>
-          <p>Loading order form...</p>
+          <p>Зареждане на формата за поръчка...</p>
         </div>
       )}
 
       {error && (
         <div className="text-center py-16 text-red-600">
-          <p>Error loading products: {error}</p>
+          <p>Грешка при зареждане на продуктите: {error}</p>
         </div>
       )}
 
