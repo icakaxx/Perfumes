@@ -43,8 +43,17 @@ export function useDatabaseProducts() {
         fetch('/api/men-perfumes')
       ]);
 
-      if (!womenResponse.ok || !menResponse.ok) {
-        throw new Error('Failed to fetch products');
+      // Check each response individually for better error reporting
+      if (!womenResponse.ok) {
+        const womenError = await womenResponse.json().catch(() => ({ error: 'Unknown error' }));
+        console.error('Women perfumes API error:', womenResponse.status, womenError);
+        throw new Error(`Failed to fetch women's perfumes: ${womenResponse.status} - ${womenError.error || 'Unknown error'}`);
+      }
+
+      if (!menResponse.ok) {
+        const menError = await menResponse.json().catch(() => ({ error: 'Unknown error' }));
+        console.error('Men perfumes API error:', menResponse.status, menError);
+        throw new Error(`Failed to fetch men's perfumes: ${menResponse.status} - ${menError.error || 'Unknown error'}`);
       }
 
       const womenData = await womenResponse.json();

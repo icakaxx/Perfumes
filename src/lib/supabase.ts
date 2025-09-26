@@ -23,5 +23,13 @@ export const supabaseBrowser = () =>
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // For admin operations (server-side only)
-export const supabaseAdmin = () =>
-  createClient(supabaseUrl, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+export const supabaseAdmin = () => {
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  
+  if (!serviceRoleKey) {
+    console.error('SUPABASE_SERVICE_ROLE_KEY is missing!');
+    throw new Error('SUPABASE_SERVICE_ROLE_KEY is required for admin operations. Please check your environment variables.');
+  }
+  
+  return createClient(supabaseUrl, serviceRoleKey);
+}

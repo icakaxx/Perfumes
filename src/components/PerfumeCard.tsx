@@ -60,7 +60,7 @@ export function PerfumeCard({ product }: PerfumeCardProps) {
   };
 
   return (
-    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg">
+    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg w-full">
       <div className="relative aspect-square overflow-hidden">
         <Image
           src={images[currentImageIndex]}
@@ -84,17 +84,17 @@ export function PerfumeCard({ product }: PerfumeCardProps) {
               variant="ghost"
               size="sm"
               onClick={prevImage}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 shadow-lg h-8 w-8 p-0 z-10"
+              className="absolute left-1 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 shadow-lg h-6 w-6 sm:h-8 sm:w-8 p-0 z-10"
             >
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
             <Button
               variant="ghost"
               size="sm"
               onClick={nextImage}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 shadow-lg h-8 w-8 p-0 z-10"
+              className="absolute right-1 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 shadow-lg h-6 w-6 sm:h-8 sm:w-8 p-0 z-10"
             >
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
           </>
         )}
@@ -116,31 +116,31 @@ export function PerfumeCard({ product }: PerfumeCardProps) {
           </div>
         )}
         
-        <div className="absolute top-2 left-2">
-          <Badge variant="secondary" className="bg-white/90 text-black text-xs">
+        <div className="absolute top-1 left-1 sm:top-2 sm:left-2">
+          <Badge variant="secondary" className="bg-white/90 text-black text-xs px-1 py-0.5 sm:px-2 sm:py-1">
             {product.genderProfile === "Feminine" ? "Женски" : 
              product.genderProfile === "Masculine" ? "Мъжки" : "Унисекс"}
           </Badge>
         </div>
         {availableVariants.length === 0 && (
-          <div className="absolute top-2 right-2">
-            <Badge variant="destructive" className="text-xs">
+          <div className="absolute top-1 right-1 sm:top-2 sm:right-2">
+            <Badge variant="destructive" className="text-xs px-1 py-0.5 sm:px-2 sm:py-1">
               Изчерпан
             </Badge>
           </div>
         )}
       </div>
       
-      <CardContent className="p-4">
-        <div className="space-y-3">
+      <CardContent className="p-3 sm:p-4">
+        <div className="space-y-2 sm:space-y-3">
           {/* Product Name */}
           <div>
-            <h3 className="font-semibold text-lg leading-tight">{product.name}</h3>
-            <p className="text-sm text-muted-foreground">{product.brand}</p>
+            <h3 className="font-semibold text-base sm:text-lg leading-tight">{product.name}</h3>
+            <p className="text-xs sm:text-sm text-muted-foreground">{product.brand}</p>
           </div>
           
           {/* Description */}
-          <div className="text-sm text-muted-foreground">
+          <div className="text-xs sm:text-sm text-muted-foreground">
             <p className={isDescriptionExpanded ? "" : "line-clamp-2"}>
               {product.description}
             </p>
@@ -157,10 +157,10 @@ export function PerfumeCard({ product }: PerfumeCardProps) {
           {/* Price and Volume */}
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xl font-bold text-accent">
+              <p className="text-lg sm:text-xl font-bold text-accent">
                 {formatCurrency(cheapestVariant.price)}
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-xs sm:text-sm text-muted-foreground">
                 {cheapestVariant.volumeMl}ml
               </p>
             </div>
@@ -168,47 +168,87 @@ export function PerfumeCard({ product }: PerfumeCardProps) {
         </div>
       </CardContent>
       
-      <CardFooter className="p-4 pt-0">
+      <CardFooter className="p-3 sm:p-4 pt-0">
         {availableVariants.length > 0 ? (
-          <div className="flex gap-2 w-full">
-            {/* Quantity Selector */}
-            <div className="flex items-center gap-2">
+          <>
+            {/* Mobile Layout - Force vertical stacking */}
+            <div className="flex flex-col sm:hidden gap-3">
+              {/* Quantity Selector */}
+              <div className="flex items-center justify-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  disabled={quantity <= 1}
+                  className="border-gray-300 bg-white hover:bg-gray-50 hover:border-gray-400 text-gray-700 h-8 w-8 flex items-center justify-center"
+                >
+                  <span className="text-sm font-bold">-</span>
+                </Button>
+                <span className="text-sm font-medium min-w-[20px] text-center text-gray-700">
+                  {quantity}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="border-gray-300 bg-white hover:bg-gray-50 hover:border-gray-400 text-gray-700 h-8 w-8 flex items-center justify-center"
+                >
+                  <span className="text-sm font-bold">+</span>
+                </Button>
+              </div>
+              
+              {/* Add to Cart Button */}
               <Button
-                variant="outline"
+                onClick={handleAddToCart}
                 size="sm"
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                disabled={quantity <= 1}
-                className="border-gray-300 bg-white hover:bg-gray-50 hover:border-gray-400 text-gray-700"
+                className="w-full bg-accent hover:bg-accent/90 text-white text-sm h-9"
               >
-                <Minus className="h-3 w-3" />
-              </Button>
-              <span className="text-sm font-medium min-w-[20px] text-center text-gray-700">
-                {quantity}
-              </span>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setQuantity(quantity + 1)}
-                className="border-gray-300 bg-white hover:bg-gray-50 hover:border-gray-400 text-gray-700"
-              >
-                <Plus className="h-3 w-3" />
+                <ShoppingCart className="h-3 w-3 mr-1" />
+                Добави
               </Button>
             </div>
-            
-            {/* Add to Cart Button */}
-            <Button
-              onClick={handleAddToCart}
-              size="sm"
-              className="flex-1 bg-accent hover:bg-accent/90 text-white text-xs"
-            >
-              <ShoppingCart className="h-3 w-3 mr-1" />
-              Добави
-            </Button>
-          </div>
+
+            {/* Desktop Layout */}
+            <div className="hidden sm:flex gap-2 w-full">
+              {/* Quantity Selector */}
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  disabled={quantity <= 1}
+                  className="border-gray-300 bg-white hover:bg-gray-50 hover:border-gray-400 text-gray-700 h-8 w-8 flex items-center justify-center"
+                >
+                  <span className="text-sm font-bold">-</span>
+                </Button>
+                <span className="text-sm font-medium min-w-[20px] text-center text-gray-700">
+                  {quantity}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="border-gray-300 bg-white hover:bg-gray-50 hover:border-gray-400 text-gray-700 h-8 w-8 flex items-center justify-center"
+                >
+                  <span className="text-sm font-bold">+</span>
+                </Button>
+              </div>
+              
+              {/* Add to Cart Button */}
+              <Button
+                onClick={handleAddToCart}
+                size="sm"
+                className="flex-1 bg-accent hover:bg-accent/90 text-white text-sm h-9"
+              >
+                <ShoppingCart className="h-3 w-3 mr-1" />
+                Добави
+              </Button>
+            </div>
+          </>
         ) : (
           <Button
             disabled
-            className="w-full"
+            className="w-full h-9"
             variant="outline"
           >
             Изчерпан

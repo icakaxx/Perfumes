@@ -187,7 +187,7 @@ function ShopContent() {
   };
 
   return (
-    <div className="container py-8">
+    <div className="container py-4 sm:py-8 px-4 sm:px-6">
       {loading && (
         <div className="text-center py-16">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mx-auto mb-4"></div>
@@ -204,17 +204,17 @@ function ShopContent() {
       {!loading && !error && (
         <>
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="font-serif text-3xl md:text-4xl font-bold mb-4">
+          <div className="mb-6 sm:mb-8">
+            <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4">
               Колекция Парфюми
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-sm sm:text-base text-muted-foreground">
               {filteredProducts.length} продукта налични
             </p>
           </div>
 
       {/* Search and Filter Bar */}
-      <div className="sticky top-16 z-20 glass-effect backdrop-blur-md py-4 mb-6 border-b">
+      <div className="sticky top-16 z-20 glass-effect backdrop-blur-md py-3 sm:py-4 mb-4 sm:mb-6 border-b">
         <div className="flex gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -222,18 +222,19 @@ function ShopContent() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Търсене парфюми, марки..."
-              className="pl-10"
+              className="pl-10 text-sm sm:text-base"
             />
           </div>
           <Button
             variant="outline"
             onClick={() => setShowFilters(true)}
-            className="relative"
+            className="relative text-xs sm:text-sm"
           >
-            <SlidersHorizontal className="h-4 w-4 mr-2" />
-            Филтри
+            <SlidersHorizontal className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+            <span className="hidden sm:inline">Филтри</span>
+            <span className="sm:hidden">Филт.</span>
             {activeFilterCount > 0 && (
-              <Badge className="ml-2 h-5 px-1.5 bg-accent text-white">
+              <Badge className="ml-1 sm:ml-2 h-4 w-4 sm:h-5 sm:px-1.5 bg-accent text-white text-xs">
                 {activeFilterCount}
               </Badge>
             )}
@@ -242,9 +243,9 @@ function ShopContent() {
 
         {/* Active Filters Display */}
         {activeFilterCount > 0 && (
-          <div className="flex flex-wrap gap-2 mt-3">
+          <div className="flex flex-wrap gap-1 sm:gap-2 mt-2 sm:mt-3">
             {filters.concentrations.map(conc => (
-              <Badge key={conc} variant="secondary">
+              <Badge key={conc} variant="secondary" className="text-xs">
                 {conc}
                 <button
                   onClick={() => setFilters({
@@ -253,12 +254,12 @@ function ShopContent() {
                   })}
                   className="ml-1"
                 >
-                  <X className="h-3 w-3" />
+                  <X className="h-2 w-2 sm:h-3 sm:w-3" />
                 </button>
               </Badge>
             ))}
             {filters.genderProfiles.map(gender => (
-              <Badge key={gender} variant="secondary">
+              <Badge key={gender} variant="secondary" className="text-xs">
                 {gender}
                 <button
                   onClick={() => setFilters({
@@ -267,12 +268,12 @@ function ShopContent() {
                   })}
                   className="ml-1"
                 >
-                  <X className="h-3 w-3" />
+                  <X className="h-2 w-2 sm:h-3 sm:w-3" />
                 </button>
               </Badge>
             ))}
             {[...filters.topNotes, ...filters.heartNotes, ...filters.baseNotes].map(note => (
-              <Badge key={note} variant="secondary">
+              <Badge key={note} variant="secondary" className="text-xs">
                 {note}
                 <button
                   onClick={() => setFilters({
@@ -283,18 +284,18 @@ function ShopContent() {
                   })}
                   className="ml-1"
                 >
-                  <X className="h-3 w-3" />
+                  <X className="h-2 w-2 sm:h-3 sm:w-3" />
                 </button>
               </Badge>
             ))}
             {filters.inStockOnly && (
-              <Badge variant="secondary">
+              <Badge variant="secondary" className="text-xs">
                 In Stock
                 <button
                   onClick={() => setFilters({ ...filters, inStockOnly: false })}
                   className="ml-1"
                 >
-                  <X className="h-3 w-3" />
+                  <X className="h-2 w-2 sm:h-3 sm:w-3" />
                 </button>
               </Badge>
             )}
@@ -302,7 +303,7 @@ function ShopContent() {
               variant="ghost"
               size="sm"
               onClick={clearAllFilters}
-              className="h-6"
+              className="h-5 sm:h-6 text-xs"
             >
               Изчисти всички
             </Button>
@@ -312,7 +313,7 @@ function ShopContent() {
 
       {/* Products Grid */}
       {filteredProducts.length > 0 ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
           {filteredProducts.map((product) => (
             <PerfumeCard
               key={product.id}
@@ -321,11 +322,11 @@ function ShopContent() {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-16">
-          <p className="text-lg text-muted-foreground mb-4">
+        <div className="flex flex-col items-center justify-center py-12 sm:py-16">
+          <p className="text-base sm:text-lg text-muted-foreground mb-4 text-center px-4">
             Не са намерени продукти, отговарящи на вашите критерии
           </p>
-          <Button onClick={clearAllFilters} variant="outline">
+          <Button onClick={clearAllFilters} variant="outline" className="text-sm">
             Изчисти филтрите
           </Button>
         </div>

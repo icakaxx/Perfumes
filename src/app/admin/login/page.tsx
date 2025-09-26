@@ -35,20 +35,20 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-3 sm:p-4">
       <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="mx-auto w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mb-4">
-            <Lock className="h-6 w-6 text-accent" />
+        <CardHeader className="text-center p-4 sm:p-6">
+          <div className="mx-auto w-10 h-10 sm:w-12 sm:h-12 bg-accent/10 rounded-full flex items-center justify-center mb-3 sm:mb-4">
+            <Lock className="h-5 w-5 sm:h-6 sm:w-6 text-accent" />
           </div>
-          <CardTitle className="text-2xl font-bold">Админ Панел</CardTitle>
-          <p className="text-gray-600">Влезте в административния панел</p>
+          <CardTitle className="text-xl sm:text-2xl font-bold">Админ Панел</CardTitle>
+          <p className="text-sm sm:text-base text-gray-600">Влезте в административния панел</p>
         </CardHeader>
         
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <CardContent className="p-4 sm:p-6">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="username">Потребителско име</Label>
+              <Label htmlFor="username" className="text-sm sm:text-base">Потребителско име</Label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
@@ -57,14 +57,14 @@ export default function AdminLoginPage() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Въведете потребителско име"
-                  className="pl-10"
+                  className="pl-10 text-sm sm:text-base h-10 sm:h-11"
                   required
                 />
               </div>
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="password">Парола</Label>
+              <Label htmlFor="password" className="text-sm sm:text-base">Парола</Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
@@ -73,30 +73,30 @@ export default function AdminLoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Въведете парола"
-                  className="pl-10"
+                  className="pl-10 text-sm sm:text-base h-10 sm:h-11"
                   required
                 />
               </div>
             </div>
             
             {error && (
-              <div className="flex items-center gap-2 text-red-600 text-sm">
-                <AlertCircle className="h-4 w-4" />
+              <div className="flex items-center gap-2 text-red-600 text-xs sm:text-sm">
+                <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4" />
                 {error}
               </div>
             )}
             
             <Button 
               type="submit" 
-              className="w-full bg-accent hover:bg-accent/90 text-white"
+              className="w-full bg-accent hover:bg-accent/90 text-white text-sm sm:text-base h-10 sm:h-11"
               disabled={isLoading}
             >
               {isLoading ? "Влизане..." : "Влез"}
             </Button>
           </form>
           
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-500">
+          <div className="mt-4 sm:mt-6 text-center">
+            <p className="text-xs sm:text-sm text-gray-500">
               Тестови данни: потребителско име: <strong>1</strong>, парола: <strong>1</strong>
             </p>
           </div>

@@ -367,7 +367,7 @@ export default function OrderPage() {
 
               <div className="bg-blue-50 p-4 rounded-lg">
                 <p className="text-sm text-blue-800">
-                  <strong>Дропшипинг поръчка:</strong> Ще се свържем с вас за потвърждение преди обработка на поръчката.
+                  <strong> Ще се свържем с вас за потвърждение преди обработка на поръчката. </strong>
                 </p>
               </div>
 
@@ -430,11 +430,11 @@ export default function OrderPage() {
                 </div>
                 <div className="flex justify-between items-center mb-2">
                   <span>Доставка</span>
-                  <span className="text-green-600">Безплатна</span>
+                  <span className="text-green-600">8-10лв доставка с ЕКОНТ</span>
                 </div>
                 <div className="border-t pt-2">
                   <div className="flex justify-between items-center">
-                    <span className="font-semibold text-lg">Общо</span>
+                    <span className="font-semibold text-lg"> Общо: 8-10лв доставка с ЕКОНТ + </span>
                     <span className="font-bold text-lg text-accent">
                       {formatCurrency(totalPrice)}
                     </span>
@@ -443,12 +443,11 @@ export default function OrderPage() {
               </div>
 
               <div className="bg-green-50 p-4 rounded-lg">
-                <h4 className="font-semibold mb-2 text-green-800">Дропшипинг информация</h4>
+                <h4 className="font-semibold mb-2 text-green-800">Информация за доставка</h4>
                 <ul className="text-sm text-green-700 space-y-1">
                   <li>• Ще се свържем с вас за потвърждение</li>
-                  <li>• Очаквана доставка: 3-5 работни дни</li>
-                  <li>• Безплатна доставка в цяла България</li>
-                  <li>• Безплатно опаковане с подаръчна хартия</li>
+                  <li>• Очаквана доставка: 1-2 работни дни</li>
+                  <li>• Доставка в цяла България</li>
                 </ul>
               </div>
             </div>
