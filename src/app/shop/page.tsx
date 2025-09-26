@@ -16,7 +16,7 @@ export default function ShopPage() {
       <div className="container py-8">
         <div className="text-center py-16">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mx-auto mb-4"></div>
-          <p>Loading shop...</p>
+          <p>Зареждане на магазина...</p>
         </div>
       </div>
     }>
@@ -191,13 +191,13 @@ function ShopContent() {
       {loading && (
         <div className="text-center py-16">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mx-auto mb-4"></div>
-          <p>Loading products...</p>
+          <p>Зареждане на продуктите...</p>
         </div>
       )}
 
       {error && (
         <div className="text-center py-16 text-red-600">
-          <p>Error loading products: {error}</p>
+          <p>Грешка при зареждане на продуктите: {error}</p>
         </div>
       )}
 
