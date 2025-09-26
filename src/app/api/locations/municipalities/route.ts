@@ -11,7 +11,9 @@ export async function GET() {
     return NextResponse.json(sortedMunicipalities);
 
   } catch (error) {
-    console.error('API error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API error:', error);
+    }
     return NextResponse.json(
       { error: 'Internal server error', details: error },
       { status: 500 }

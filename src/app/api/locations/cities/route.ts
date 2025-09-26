@@ -34,7 +34,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json([cityData]);
 
   } catch (error) {
-    console.error('API error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API error:', error);
+    }
     return NextResponse.json(
       { error: 'Internal server error', details: error },
       { status: 500 }

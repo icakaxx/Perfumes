@@ -22,16 +22,18 @@ export default function AdminLoginPage() {
     setIsLoading(true);
     setError("");
 
-    // Simulate loading
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    if (login(username, password)) {
-      router.push("/admin");
-    } else {
-      setError("Невалидни данни за вход");
+    try {
+      const success = await login(username, password);
+      if (success) {
+        router.push("/admin");
+      } else {
+        setError("Невалидни данни за вход");
+      }
+    } catch (error) {
+      setError("Възникна грешка при влизане. Моля, опитайте отново.");
+    } finally {
+      setIsLoading(false);
     }
-    
-    setIsLoading(false);
   };
 
   return (
@@ -97,7 +99,7 @@ export default function AdminLoginPage() {
           
           <div className="mt-4 sm:mt-6 text-center">
             <p className="text-xs sm:text-sm text-gray-500">
-              Тестови данни: потребителско име: <strong>1</strong>, парола: <strong>1</strong>
+              Конфигурирайте ADMIN_USERNAME и ADMIN_PASSWORD в .env файла
             </p>
           </div>
         </CardContent>

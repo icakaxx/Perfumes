@@ -10,7 +10,9 @@ export async function GET() {
       .order('created_at', { ascending: false });
 
     if (error) {
-      console.error('Supabase error:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Supabase error:', error);
+      }
       return NextResponse.json(
         { error: 'Failed to fetch men\'s perfumes' },
         { status: 500 }
@@ -19,7 +21,9 @@ export async function GET() {
 
     return NextResponse.json(data);
   } catch (error) {
-    console.error('API error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API error:', error);
+    }
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -75,7 +79,9 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      console.error('Supabase error:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Supabase error:', error);
+      }
       return NextResponse.json(
         { error: 'Failed to add men\'s perfume' },
         { status: 500 }
@@ -89,7 +95,9 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('API error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API error:', error);
+    }
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -123,7 +131,9 @@ export async function PUT(request: NextRequest) {
       .single();
 
     if (error) {
-      console.error('Supabase error:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Supabase error:', error);
+      }
       return NextResponse.json(
         { error: 'Failed to update men\'s perfume' },
         { status: 500 }
@@ -137,7 +147,9 @@ export async function PUT(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('API error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API error:', error);
+    }
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -165,7 +177,9 @@ export async function DELETE(request: NextRequest) {
       .eq('id', id);
 
     if (error) {
-      console.error('Supabase error:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Supabase error:', error);
+      }
       return NextResponse.json(
         { error: 'Failed to delete men\'s perfume' },
         { status: 500 }
@@ -178,7 +192,9 @@ export async function DELETE(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('API error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API error:', error);
+    }
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

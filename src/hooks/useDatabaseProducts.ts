@@ -46,13 +46,17 @@ export function useDatabaseProducts() {
       // Check each response individually for better error reporting
       if (!womenResponse.ok) {
         const womenError = await womenResponse.json().catch(() => ({ error: 'Unknown error' }));
-        console.error('Women perfumes API error:', womenResponse.status, womenError);
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Women perfumes API error:', womenResponse.status, womenError);
+        }
         throw new Error(`Failed to fetch women's perfumes: ${womenResponse.status} - ${womenError.error || 'Unknown error'}`);
       }
 
       if (!menResponse.ok) {
         const menError = await menResponse.json().catch(() => ({ error: 'Unknown error' }));
-        console.error('Men perfumes API error:', menResponse.status, menError);
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Men perfumes API error:', menResponse.status, menError);
+        }
         throw new Error(`Failed to fetch men's perfumes: ${menResponse.status} - ${menError.error || 'Unknown error'}`);
       }
 
@@ -96,7 +100,9 @@ export function useDatabaseProducts() {
       setProducts(allProducts);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch products');
-      console.error('Error fetching products:', err);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error fetching products:', err);
+      }
     } finally {
       setLoading(false);
     }

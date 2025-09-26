@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { CheckCircle, Package, Home, ShoppingBag } from "lucide-react";
 import { formatCurrency } from "@/lib/format";
 import { useDatabaseProducts } from "@/hooks/useDatabaseProducts";
+import { getSecureStorage } from "@/lib/secure-storage";
 
 interface OrderSummary {
   firstName: string;
@@ -29,9 +30,9 @@ export default function SuccessPage() {
   const [orderData, setOrderData] = useState<OrderSummary | null>(null);
 
   useEffect(() => {
-    const savedOrder = localStorage.getItem("lastOrder");
+    const savedOrder = getSecureStorage("lastOrder");
     if (savedOrder) {
-      setOrderData(JSON.parse(savedOrder));
+      setOrderData(savedOrder);
     } else {
       router.push("/");
     }

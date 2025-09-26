@@ -1,24 +1,28 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
+  // Only allow in development mode
+  if (process.env.NODE_ENV !== 'development') {
+    return NextResponse.json({ 
+      success: false,
+      error: 'This endpoint is only available in development mode'
+    }, { status: 403 });
+  }
+
   try {
-    // Log all environment variables that start with NEXT_PUBLIC_ or SUPABASE
-    const allEnvVars = process.env;
+    // Only show presence, not actual values
     const relevantVars: Record<string, string> = {};
     
-    for (const [key, value] of Object.entries(allEnvVars)) {
-      if (key.startsWith('NEXT_PUBLIC_') || key.startsWith('SUPABASE_')) {
-        relevantVars[key] = value ? 'Present' : 'Missing';
-      }
+    const envKeys = ['NEXT_PUBLIC_SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_ANON_KEY', 'SUPABASE_SERVICE_ROLE_KEY'];
+    
+    for (const key of envKeys) {
+      relevantVars[key] = process.env[key] ? 'Present' : 'Missing';
     }
 
     return NextResponse.json({ 
       success: true,
-      message: 'Environment variables debug',
-      relevantVars,
-      allKeys: Object.keys(allEnvVars).filter(key => 
-        key.startsWith('NEXT_PUBLIC_') || key.startsWith('SUPABASE_')
-      )
+      message: 'Environment variables debug (development only)',
+      relevantVars
     });
 
   } catch (error) {

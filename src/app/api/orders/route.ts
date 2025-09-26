@@ -1,19 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
+import { validateCSRFToken } from '@/lib/csrf';
+import { orderSchema } from '@/lib/validation';
+import { ZodError } from 'zod';
 
 export async function POST(request: NextRequest) {
+  // CSRF Protection
+  if (!validateCSRFToken(request)) {
+    return NextResponse.json(
+      { error: 'CSRF token mismatch' },
+      { status: 403 }
+    );
+  }
+
   try {
     const orderData = await request.json();
 
-    // Validate required fields
-    const requiredFields = ['firstName', 'lastName', 'address', 'phone', 'municipality', 'city', 'items'];
-    for (const field of requiredFields) {
-      if (!orderData[field]) {
+    // Validate input data
+    let validatedData;
+    try {
+      validatedData = orderSchema.parse(orderData);
+    } catch (error) {
+      if (error instanceof ZodError) {
         return NextResponse.json(
-          { error: `Missing required field: ${field}` },
+          { 
+            error: 'Validation failed', 
+            details: error.issues.map(err => ({
+              field: err.path.join('.'),
+              message: err.message
+            }))
+          },
           { status: 400 }
         );
       }
+      throw error;
     }
 
     // Insert order into Supabase
@@ -21,17 +41,17 @@ export async function POST(request: NextRequest) {
       .from('orders')
       .insert([
         {
-          customer_first_name: orderData.firstName,
-          customer_middle_name: orderData.middleName || null,
-          customer_last_name: orderData.lastName,
-          address: orderData.address,
-          phone: orderData.phone,
-          municipality: orderData.municipality,
-          city: orderData.city,
-          country: orderData.country || 'Bulgaria',
-          items: orderData.items,
-          total_price: orderData.totalPrice,
-          status: orderData.status || 'pending',
+          customer_first_name: validatedData.firstName,
+          customer_middle_name: validatedData.middleName || null,
+          customer_last_name: validatedData.lastName,
+          address: validatedData.address,
+          phone: validatedData.phone,
+          municipality: validatedData.municipality,
+          city: validatedData.city,
+          country: validatedData.country || 'Bulgaria',
+          items: validatedData.items,
+          total_price: validatedData.totalPrice,
+          status: validatedData.status || 'pending',
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
         }
@@ -40,7 +60,11 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      console.error('Supabase error:', error);
+      if (process.env.NODE_ENV === 'development') {
+        if (process.env.NODE_ENV === 'development') {
+        console.error('Supabase error:', error);
+      }
+      }
       return NextResponse.json(
         { error: 'Failed to save order to database' },
         { status: 500 }
@@ -54,7 +78,9 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('API error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API error:', error);
+    }
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -70,7 +96,9 @@ export async function GET() {
       .order('created_at', { ascending: false });
 
     if (error) {
-      console.error('Supabase error:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Supabase error:', error);
+      }
       return NextResponse.json(
         { error: 'Failed to fetch orders' },
         { status: 500 }
@@ -80,7 +108,9 @@ export async function GET() {
     return NextResponse.json(data);
 
   } catch (error) {
-    console.error('API error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API error:', error);
+    }
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -115,7 +145,9 @@ export async function PUT(request: NextRequest) {
       .single();
 
     if (error) {
-      console.error('Supabase error:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Supabase error:', error);
+      }
       return NextResponse.json(
         { error: 'Failed to update order' },
         { status: 500 }
@@ -129,7 +161,9 @@ export async function PUT(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('API error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API error:', error);
+    }
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -157,7 +191,9 @@ export async function DELETE(request: NextRequest) {
       .eq('id', id);
 
     if (error) {
-      console.error('Supabase error:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Supabase error:', error);
+      }
       return NextResponse.json(
         { error: 'Failed to delete order' },
         { status: 500 }
@@ -170,7 +206,9 @@ export async function DELETE(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('API error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API error:', error);
+    }
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

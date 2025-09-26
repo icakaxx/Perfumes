@@ -1,6 +1,14 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
+  // Only allow in development mode
+  if (process.env.NODE_ENV !== 'development') {
+    return NextResponse.json({ 
+      success: false,
+      error: 'This endpoint is only available in development mode'
+    }, { status: 403 });
+  }
+
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -11,8 +19,7 @@ export async function GET() {
       envCheck: {
         supabaseUrl: supabaseUrl ? 'Present' : 'Missing',
         supabaseAnonKey: supabaseAnonKey ? 'Present' : 'Missing', 
-        serviceRoleKey: serviceRoleKey ? 'Present' : 'Missing',
-        supabaseUrlValue: supabaseUrl?.substring(0, 20) + '...' || 'Not set'
+        serviceRoleKey: serviceRoleKey ? 'Present' : 'Missing'
       }
     });
 

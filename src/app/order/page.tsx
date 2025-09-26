@@ -15,6 +15,8 @@ import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { municipalities } from "@/data/municipalities";
 import { cities } from "@/data/cities";
+import { setSecureStorage } from "@/lib/secure-storage";
+import { getCSRFHeaders } from "@/lib/csrf-client";
 
 export default function OrderPage() {
   const router = useRouter();
@@ -113,6 +115,7 @@ export default function OrderPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...getCSRFHeaders(),
         },
         body: JSON.stringify(orderData),
       });
@@ -124,10 +127,10 @@ export default function OrderPage() {
       }
 
       // Store order data for success page
-      localStorage.setItem("lastOrder", JSON.stringify({
+      setSecureStorage("lastOrder", {
         ...orderData,
         orderId: result.orderId,
-      }));
+      });
 
       // Clear cart after successful order
       clearCart();
