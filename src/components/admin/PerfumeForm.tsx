@@ -187,55 +187,61 @@ export function PerfumeForm({ perfume, type, onClose }: PerfumeFormProps) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-        <CardHeader>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-2 sm:p-4 z-50">
+      <Card className="w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+        <CardHeader className="sticky top-0 bg-white z-10 border-b">
           <div className="flex justify-between items-center">
-            <CardTitle>
-              {perfume ? 'Edit' : 'Add'} {type === 'women' ? "Women's" : "Men's"} Perfume
+            <CardTitle className="text-lg sm:text-xl">
+              {perfume ? 'Редактиране на парфюм' : 'Добавяне на нов парфюм'}
             </CardTitle>
             <Button variant="outline" size="sm" onClick={onClose}>
               <X className="h-4 w-4" />
             </Button>
           </div>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <CardContent className="p-4 sm:p-6">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+              <div className="bg-red-50 border border-red-200 text-red-700 px-3 sm:px-4 py-2 sm:py-3 rounded text-sm">
                 {error}
               </div>
             )}
 
             {/* Basic Information */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <Label htmlFor="name">Name *</Label>
+                <Label htmlFor="name" className="text-sm sm:text-base">Име *</Label>
                 <Input
                   id="name"
                   value={formData.name}
                   onChange={handleTextInputChange('name')}
+                  placeholder="Име на парфюма"
+                  className="text-sm sm:text-base"
                   required
                 />
               </div>
               <div>
-                <Label htmlFor="brand">Brand *</Label>
+                <Label htmlFor="brand" className="text-sm sm:text-base">Марка *</Label>
                 <Input
                   id="brand"
                   value={formData.brand}
                   onChange={handleTextInputChange('brand')}
+                  placeholder="Марка"
+                  className="text-sm sm:text-base"
                   required
                 />
               </div>
             </div>
 
             <div>
-              <Label htmlFor="description">Description *</Label>
+              <Label htmlFor="description" className="text-sm sm:text-base">Описание *</Label>
               <Textarea
                 id="description"
                 value={formData.description}
                 onChange={handleTextInputChange('description')}
                 rows={3}
+                placeholder="Описание на парфюма"
+                className="text-sm sm:text-base"
                 required
               />
             </div>

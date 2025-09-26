@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ShoppingBag, Menu, ShoppingCart } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { useCart } from "@/contexts/CartContext";
@@ -93,7 +93,11 @@ export function NavBar() {
               <Menu className="h-6 w-6" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="right">
+          <SheetContent 
+            side="right" 
+            className="bg-white border-l border-gray-200 [&>button]:text-gray-600 [&>button]:hover:text-gray-800 [&>button]:hover:bg-gray-100"
+          >
+            <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
             <div className="flex flex-col space-y-4 mt-8">
               {navItems.map((item) => {
                 const isActive = pathname === item.href;
