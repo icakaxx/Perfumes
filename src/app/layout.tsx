@@ -19,12 +19,17 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Luxury Perfume Shop - Discover Your Signature Scent",
-  description: "Premium fragrances from the world's finest perfume houses. Find your perfect scent with our curated collection.",
-  keywords: "perfume, fragrance, luxury, EDT, EDP, parfum, scent",
+  title: "Luxe Parfum - Открийте Вашия Подпис",
+  description: "Луксозни аромати от най-престижните парфюмерийни къщи по света. Намерете своя идеален аромат с нашата подбрана колекция.",
+  keywords: "парфюм, аромат, лукс, EDT, EDP, парфюм, мирис, българия",
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
   openGraph: {
-    title: "Luxury Perfume Shop",
-    description: "Discover your signature scent",
+    title: "Luxe Parfum",
+    description: "Открийте вашия подпис",
     type: "website",
   },
 };
@@ -35,7 +40,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="bg" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans antialiased">
         <ErrorBoundary>
           <AdminAuthProvider>

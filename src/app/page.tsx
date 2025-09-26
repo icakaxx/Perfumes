@@ -54,7 +54,7 @@ export default function HomePage() {
       </section>
 
       {/* Value Props */}
-      <section className="py-12 sm:py-16 bg-gradient-section">
+      <section className="py-12 sm:py-16">
         <div className="container px-4 sm:px-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             <div className="text-center p-4 sm:p-6 rounded-2xl bg-gradient-card transition-smooth hover:shadow-lg">
@@ -89,7 +89,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-12 sm:py-16 bg-gradient-section">
+      <section className="py-12 sm:py-16">
         <div className="container px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4 bg-gradient-primary bg-clip-text text-transparent">
@@ -121,7 +121,7 @@ export default function HomePage() {
       </section>
 
       {/* Categories */}
-      <section className="py-16 bg-gradient-hero">
+      <section className="py-16">
         <div className="container">
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-primary bg-clip-text text-transparent">
             Пазарувайте по Стил
