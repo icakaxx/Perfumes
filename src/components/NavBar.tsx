@@ -86,13 +86,27 @@ export function NavBar() {
           )}
         </div>
 
-        {/* Mobile Menu */}
-        <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-          <SheetTrigger asChild className="md:hidden">
-            <Button variant="ghost" size="icon">
-              <Menu className="h-6 w-6" />
+        {/* Mobile Actions */}
+        <div className="md:hidden flex items-center gap-2">
+          {/* Mobile Cart Button */}
+          <Link href="/cart">
+            <Button variant="outline" size="icon" className="relative">
+              <ShoppingCart className="h-5 w-5" />
+              {isHydrated && getTotalItems() > 0 && (
+                <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-accent text-white text-xs flex items-center justify-center">
+                  {getTotalItems()}
+                </Badge>
+              )}
             </Button>
-          </SheetTrigger>
+          </Link>
+          
+          {/* Mobile Menu */}
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
           <SheetContent 
             side="right" 
             className="bg-white border-l border-gray-200 [&>button]:text-gray-600 [&>button]:hover:text-gray-800 [&>button]:hover:bg-gray-100"
@@ -123,19 +137,6 @@ export function NavBar() {
                 );
               })}
               
-              {/* Mobile Cart Button */}
-              <Link href="/cart" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="outline" className="w-full mt-4 relative">
-                  <ShoppingCart className="h-4 w-4 mr-2" />
-                  Количка
-                  {isHydrated && getTotalItems() > 0 && (
-                    <Badge className="ml-2 h-5 w-5 rounded-full bg-accent text-white text-xs flex items-center justify-center">
-                      {getTotalItems()}
-                    </Badge>
-                  )}
-                </Button>
-              </Link>
-              
               <Link href="/shop" onClick={() => setMobileMenuOpen(false)}>
                 <Button className="w-full bg-gradient-primary hover:opacity-90 text-white mt-2 transition-smooth">
                   Пазарувай Сега
@@ -153,6 +154,7 @@ export function NavBar() {
             </div>
           </SheetContent>
         </Sheet>
+        </div>
       </div>
     </nav>
   );
