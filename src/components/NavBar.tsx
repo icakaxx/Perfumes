@@ -13,7 +13,7 @@ import { useAdminAuth } from "@/contexts/AdminAuthContext";
 export function NavBar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { getTotalItems } = useCart();
+  const { getTotalItems, isHydrated } = useCart();
   const { isAuthenticated: isAdmin } = useAdminAuth();
 
   const navItems = [
@@ -62,7 +62,7 @@ export function NavBar() {
           <Link href="/cart">
             <Button variant="outline" size="icon" className="relative">
               <ShoppingCart className="h-5 w-5" />
-              {getTotalItems() > 0 && (
+              {isHydrated && getTotalItems() > 0 && (
                 <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-accent text-white text-xs flex items-center justify-center">
                   {getTotalItems()}
                 </Badge>
@@ -128,7 +128,7 @@ export function NavBar() {
                 <Button variant="outline" className="w-full mt-4 relative">
                   <ShoppingCart className="h-4 w-4 mr-2" />
                   Количка
-                  {getTotalItems() > 0 && (
+                  {isHydrated && getTotalItems() > 0 && (
                     <Badge className="ml-2 h-5 w-5 rounded-full bg-accent text-white text-xs flex items-center justify-center">
                       {getTotalItems()}
                     </Badge>
