@@ -10,6 +10,13 @@
     --accent-hover: 240 5% 96%;  /* #F8F9FA - light gray */
     --blush: 255 255 255;        /* #FFFFFF - pure white */
     
+    /* Gradient colors */
+    --gradient-primary: linear-gradient(135deg, #78350F 0%, #D97706 50%, #F59E0B 100%);
+    --gradient-secondary: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 50%, #FCD34D 100%);
+    --gradient-hero: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 25%, #FDE68A 75%, #FCD34D 100%);
+    --gradient-card: linear-gradient(145deg, #FFFFFF 0%, #FFFBEB 100%);
+    --gradient-section: linear-gradient(180deg, #FFFFFF 0%, #FFFBEB 50%, #FFFFFF 100%);
+    
     --background: var(--bg);
     --foreground: var(--fg);
     
@@ -76,13 +83,65 @@
     @apply border-border;
   }
   body {
-    @apply bg-white text-foreground;
+    @apply text-foreground;
+    background: linear-gradient(135deg, 
+      #FAFAFA 0%, 
+      #F5F5F5 15%, 
+      #E8E8E8 30%, 
+      #D1D5DB 45%, 
+      #9CA3AF 60%, 
+      #6B7280 75%, 
+      #4B5563 90%, 
+      #374151 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    position: relative;
   }
+  
   html {
-    @apply bg-white;
+    background: linear-gradient(135deg, 
+      #FAFAFA 0%, 
+      #F5F5F5 15%, 
+      #E8E8E8 30%, 
+      #D1D5DB 45%, 
+      #9CA3AF 60%, 
+      #6B7280 75%, 
+      #4B5563 90%, 
+      #374151 100%);
+    background-attachment: fixed;
   }
-  div, section, main, nav, footer, article, aside, header {
-    @apply bg-white;
+  
+  /* Luxury background pattern overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 60% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  /* Subtle luxury texture overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      linear-gradient(45deg, transparent 25%, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.05) 50%, transparent 50%, transparent 75%, rgba(255, 255, 255, 0.05) 75%),
+      linear-gradient(-45deg, transparent 25%, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.03) 50%, transparent 50%, transparent 75%, rgba(255, 255, 255, 0.03) 75%);
+    background-size: 100px 100px, 70px 70px;
+    pointer-events: none;
+    z-index: -1;
   }
   
   .font-serif {
@@ -107,6 +166,39 @@
   
   .border-accent {
     border-color: rgb(var(--accent));
+  }
+  
+  /* Gradient utilities */
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .bg-gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+  
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .bg-gradient-card {
+    background: var(--gradient-card);
+  }
+  
+  .bg-gradient-section {
+    background: var(--gradient-section);
+  }
+  
+  /* Smooth transitions */
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Glass morphism effect */
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
   }
 }
 

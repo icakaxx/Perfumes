@@ -1,19 +1,34 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PerfumeCard } from "@/components/PerfumeCard";
 import { FiltersSheet, FilterState } from "@/components/FiltersSheet";
-import { useProducts } from "@/hooks/useProducts";
+import { useDatabaseProducts } from "@/hooks/useDatabaseProducts";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function ShopPage() {
+  return (
+    <Suspense fallback={
+      <div className="container py-8">
+        <div className="text-center py-16">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mx-auto mb-4"></div>
+          <p>Loading shop...</p>
+        </div>
+      </div>
+    }>
+      <ShopContent />
+    </Suspense>
+  );
+}
+
+function ShopContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const products = useProducts();
+  const { products, loading, error } = useDatabaseProducts();
   
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
@@ -173,18 +188,33 @@ export default function ShopPage() {
 
   return (
     <div className="container py-8">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="font-serif text-3xl md:text-4xl font-bold mb-4">
-          Колекция Парфюми
-        </h1>
-        <p className="text-muted-foreground">
-          {filteredProducts.length} продукта налични
-        </p>
-      </div>
+      {loading && (
+        <div className="text-center py-16">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mx-auto mb-4"></div>
+          <p>Loading products...</p>
+        </div>
+      )}
+
+      {error && (
+        <div className="text-center py-16 text-red-600">
+          <p>Error loading products: {error}</p>
+        </div>
+      )}
+
+      {!loading && !error && (
+        <>
+          {/* Header */}
+          <div className="mb-8">
+            <h1 className="font-serif text-3xl md:text-4xl font-bold mb-4">
+              Колекция Парфюми
+            </h1>
+            <p className="text-muted-foreground">
+              {filteredProducts.length} продукта налични
+            </p>
+          </div>
 
       {/* Search and Filter Bar */}
-      <div className="sticky top-16 z-20 bg-white py-4 mb-6 border-b">
+      <div className="sticky top-16 z-20 glass-effect backdrop-blur-md py-4 mb-6 border-b">
         <div className="flex gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -287,9 +317,6 @@ export default function ShopPage() {
             <PerfumeCard
               key={product.id}
               product={product}
-              onOrder={(productId, variantId, qty) => {
-                window.location.href = `/order?productId=${productId}&variantId=${variantId}&qty=${qty}`;
-              }}
             />
           ))}
         </div>
@@ -304,14 +331,16 @@ export default function ShopPage() {
         </div>
       )}
 
-      {/* Filters Sheet */}
-      <FiltersSheet
-        open={showFilters}
-        onOpenChange={setShowFilters}
-        filters={filters}
-        onFiltersChange={setFilters}
-        allNotes={allNotes}
-      />
+          {/* Filters Sheet */}
+          <FiltersSheet
+            open={showFilters}
+            onOpenChange={setShowFilters}
+            filters={filters}
+            onFiltersChange={setFilters}
+            allNotes={allNotes}
+          />
+        </>
+      )}
     </div>
   );
 }

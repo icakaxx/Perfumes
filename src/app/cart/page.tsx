@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Trash2, Plus, Minus } from "lucide-react";
-import { useProducts } from "@/hooks/useProducts";
+import { useDatabaseProducts } from "@/hooks/useDatabaseProducts";
 import { formatCurrency } from "@/lib/format";
 import Link from "next/link";
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, clearCart } = useCart();
-  const products = useProducts();
+  const { products, loading, error } = useDatabaseProducts();
 
   const getProductDetails = (productId: string, variantId: string) => {
     const product = products.find(p => p.id === productId);
@@ -34,6 +34,31 @@ export default function CartPage() {
   };
 
   const totalPrice = getTotalPrice();
+
+  if (loading) {
+    return (
+      <div className="py-16">
+        <div className="container">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mx-auto mb-4"></div>
+            <p>Loading cart...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="py-16">
+        <div className="container">
+          <div className="text-center text-red-600">
+            <p>Error loading products: {error}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (items.length === 0) {
     return (
@@ -69,9 +94,9 @@ export default function CartPage() {
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="space-y-8">
           {/* Cart Items */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="space-y-4">
             {items.map((item) => {
               const details = getProductDetails(item.productId, item.variantId);
               if (!details) return null;
@@ -142,7 +167,7 @@ export default function CartPage() {
           </div>
 
           {/* Order Summary */}
-          <div className="lg:col-span-1">
+          <div className="max-w-md mx-auto">
             <Card>
               <CardHeader>
                 <CardTitle>Обобщение на поръчката</CardTitle>

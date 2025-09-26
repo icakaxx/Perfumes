@@ -22,7 +22,7 @@ export function NavBar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 border-b bg-white backdrop-blur">
+    <nav className="sticky top-0 z-50 border-b glass-effect backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
@@ -71,7 +71,7 @@ export function NavBar() {
           </Link>
           
           <Link href="/shop">
-            <Button className="bg-accent hover:bg-accent/90 text-white">
+            <Button className="bg-gradient-primary hover:opacity-90 text-white transition-smooth">
               Пазарувай Сега
             </Button>
           </Link>
@@ -133,7 +133,7 @@ export function NavBar() {
               </Link>
               
               <Link href="/shop" onClick={() => setMobileMenuOpen(false)}>
-                <Button className="w-full bg-accent hover:bg-accent/90 text-white mt-2">
+                <Button className="w-full bg-gradient-primary hover:opacity-90 text-white mt-2 transition-smooth">
                   Пазарувай Сега
                 </Button>
               </Link>

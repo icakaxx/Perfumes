@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { CheckCircle, Package, Home, ShoppingBag } from "lucide-react";
 import { formatCurrency } from "@/lib/format";
-import { products } from "@/data/products";
+import { useDatabaseProducts } from "@/hooks/useDatabaseProducts";
 
 interface OrderSummary {
   firstName: string;
@@ -25,6 +25,7 @@ interface OrderSummary {
 
 export default function SuccessPage() {
   const router = useRouter();
+  const { products, loading } = useDatabaseProducts();
   const [orderData, setOrderData] = useState<OrderSummary | null>(null);
 
   useEffect(() => {
@@ -36,9 +37,10 @@ export default function SuccessPage() {
     }
   }, [router]);
 
-  if (!orderData) {
+  if (!orderData || loading) {
     return (
       <div className="container py-16 text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mx-auto mb-4"></div>
         <p className="text-muted-foreground">Loading order details...</p>
       </div>
     );

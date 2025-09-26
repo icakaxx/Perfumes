@@ -15,10 +15,13 @@ if (!supabaseAnonKey) {
   throw new Error('supabaseAnonKey is required. Please check your .env.local file.')
 }
 
+// Browser/client components - use this for client-side operations
+export const supabaseBrowser = () =>
+  createClient(supabaseUrl, supabaseAnonKey)
+
+// Legacy export for backward compatibility
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-// For admin operations (server-side)
-export const supabaseAdmin = createClient(
-  supabaseUrl,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+// For admin operations (server-side only)
+export const supabaseAdmin = () =>
+  createClient(supabaseUrl, process.env.SUPABASE_SERVICE_ROLE_KEY!)

@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 // import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useCart } from "@/contexts/CartContext";
-import { useProducts } from "@/hooks/useProducts";
+import { useDatabaseProducts } from "@/hooks/useDatabaseProducts";
 import { formatCurrency } from "@/lib/format";
 import { ArrowLeft, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
@@ -20,7 +20,7 @@ export default function OrderPage() {
   const router = useRouter();
   const { toast } = useToast();
   const { items, clearCart } = useCart();
-  const products = useProducts();
+  const { products, loading, error } = useDatabaseProducts();
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -153,14 +153,29 @@ export default function OrderPage() {
 
   return (
     <div className="container py-8 max-w-4xl">
-      {/* Header */}
-      <div className="mb-8">
-        <Link href="/cart" className="inline-flex items-center text-muted-foreground hover:text-accent mb-4">
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Назад към количката
-        </Link>
-        <h1 className="font-serif text-3xl font-bold">Завърши поръчката</h1>
-      </div>
+      {loading && (
+        <div className="text-center py-16">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mx-auto mb-4"></div>
+          <p>Loading order form...</p>
+        </div>
+      )}
+
+      {error && (
+        <div className="text-center py-16 text-red-600">
+          <p>Error loading products: {error}</p>
+        </div>
+      )}
+
+      {!loading && !error && (
+        <>
+          {/* Header */}
+          <div className="mb-8">
+            <Link href="/cart" className="inline-flex items-center text-muted-foreground hover:text-accent mb-4">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Назад към количката
+            </Link>
+            <h1 className="font-serif text-3xl font-bold">Завърши поръчката</h1>
+          </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Order Form */}
@@ -440,6 +455,8 @@ export default function OrderPage() {
           </CardContent>
         </Card>
       </div>
+        </>
+      )}
     </div>
   );
 }

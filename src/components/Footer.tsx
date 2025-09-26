@@ -8,11 +8,11 @@ export function Footer() {
   const { isAuthenticated: isAdmin } = useAdminAuth();
   
   return (
-    <footer className="bg-white border-t relative">
+    <footer className="bg-gradient-section border-t relative">
       {/* Admin Gear Button */}
       <Link 
         href="/admin/login"
-        className="absolute top-4 right-4 z-10 p-3 bg-accent hover:bg-accent/90 rounded-full transition-colors shadow-lg"
+        className="absolute top-4 right-4 z-10 p-3 bg-gradient-primary hover:opacity-90 rounded-full transition-smooth shadow-lg"
         title="Админ Панел"
       >
         <Settings className="h-6 w-6 text-white" />

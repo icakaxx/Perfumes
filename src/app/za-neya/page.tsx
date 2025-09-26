@@ -1,11 +1,32 @@
 "use client";
 
 import { PerfumeCard } from "@/components/PerfumeCard";
-import { useProducts } from "@/hooks/useProducts";
+import { useDatabaseProducts } from "@/hooks/useDatabaseProducts";
 
 export default function ZaNeyaPage() {
-  const products = useProducts();
+  const { products, loading, error } = useDatabaseProducts();
   const feminineProducts = products.filter(product => product.genderProfile === "Feminine");
+
+  if (loading) {
+    return (
+      <div className="py-16 bg-gradient-to-br from-pink-50 to-rose-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-600 mx-auto mb-4"></div>
+          <p>Loading women's perfumes...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="py-16 bg-gradient-to-br from-pink-50 to-rose-50 flex items-center justify-center">
+        <div className="text-center text-red-600">
+          <p>Error loading products: {error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="py-16 bg-gradient-to-br from-pink-50 to-rose-50">

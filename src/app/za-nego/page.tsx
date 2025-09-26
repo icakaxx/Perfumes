@@ -1,11 +1,32 @@
 "use client";
 
 import { PerfumeCard } from "@/components/PerfumeCard";
-import { useProducts } from "@/hooks/useProducts";
+import { useDatabaseProducts } from "@/hooks/useDatabaseProducts";
 
 export default function ZaNegoPage() {
-  const products = useProducts();
+  const { products, loading, error } = useDatabaseProducts();
   const masculineProducts = products.filter(product => product.genderProfile === "Masculine");
+
+  if (loading) {
+    return (
+      <div className="py-16 bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p>Loading men's perfumes...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="py-16 bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
+        <div className="text-center text-red-600">
+          <p>Error loading products: {error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="py-16 bg-gradient-to-br from-blue-50 to-indigo-50">

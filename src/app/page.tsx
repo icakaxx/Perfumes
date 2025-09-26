@@ -4,41 +4,80 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { PerfumeCard } from "@/components/PerfumeCard";
-import { useProducts } from "@/hooks/useProducts";
+import { useDatabaseProducts } from "@/hooks/useDatabaseProducts";
 import { ArrowRight, Sparkles, Star, Shield } from "lucide-react";
 
 export default function HomePage() {
-  const products = useProducts();
+  const { products, loading, error } = useDatabaseProducts();
   const featuredProducts = products.slice(0, 16);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mx-auto mb-4"></div>
+          <p>Loading products...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center text-red-600">
+          <p>Error loading products: {error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
 
+      {/* Hero Section */}
+      <section className="py-20 bg-gradient-hero">
+        <div className="container text-center">
+          <h1 className="font-serif text-4xl md:text-6xl font-bold mb-6 text-gray-900">
+            Открийте Вашия Подпис
+          </h1>
+          <p className="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
+            Луксозни аромати от най-престижните парфюмерийни къщи по света
+          </p>
+          <Link href="/shop">
+            <Button size="lg" className="bg-gradient-primary hover:opacity-90 text-white px-8 py-4 text-lg transition-smooth">
+              Пазарувайте Сега
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
+        </div>
+      </section>
+
       {/* Value Props */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gradient-section">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-4 bg-accent/10 rounded-full flex items-center justify-center">
-                <Sparkles className="h-8 w-8 text-accent" />
+            <div className="text-center p-6 rounded-2xl bg-gradient-card transition-smooth hover:shadow-lg">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-primary rounded-full flex items-center justify-center">
+                <Sparkles className="h-8 w-8 text-white" />
               </div>
               <h3 className="font-serif text-xl font-semibold mb-2">Автентичен Лукс</h3>
               <p className="text-muted-foreground">
                 100% автентични аромати от престижни парфюмерийни къщи по света
               </p>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-4 bg-accent/10 rounded-full flex items-center justify-center">
-                <Star className="h-8 w-8 text-accent" />
+            <div className="text-center p-6 rounded-2xl bg-gradient-card transition-smooth hover:shadow-lg">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-primary rounded-full flex items-center justify-center">
+                <Star className="h-8 w-8 text-white" />
               </div>
               <h3 className="font-serif text-xl font-semibold mb-2">Експертна Подборка</h3>
               <p className="text-muted-foreground">
                 Ръчно подбрана селекция от експерти по аромати и парфюмери
               </p>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-4 bg-accent/10 rounded-full flex items-center justify-center">
-                <Shield className="h-8 w-8 text-accent" />
+            <div className="text-center p-6 rounded-2xl bg-gradient-card transition-smooth hover:shadow-lg">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-primary rounded-full flex items-center justify-center">
+                <Shield className="h-8 w-8 text-white" />
               </div>
               <h3 className="font-serif text-xl font-semibold mb-2">Сигурна Доставка</h3>
               <p className="text-muted-foreground">
@@ -50,10 +89,10 @@ export default function HomePage() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-16">
+      <section className="py-16 bg-gradient-section">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
               Препоръчани Аромати
             </h2>
             <p className="text-lg text-muted-foreground">
@@ -82,9 +121,9 @@ export default function HomePage() {
       </section>
 
       {/* Categories */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gradient-hero">
         <div className="container">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-primary bg-clip-text text-transparent">
             Пазарувайте по Стил
           </h2>
           
