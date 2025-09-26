@@ -374,9 +374,9 @@ export default function OrderPage() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-accent hover:bg-accent/90 text-white"
+                className="w-full bg-red-600 hover:bg-red-700 text-white py-4 font-bold border-2 border-red-800 shadow-lg"
               >
-                {isSubmitting ? "Обработва се..." : "Изпрати поръчката"}
+                🛒 {isSubmitting ? "ОБРАБОТВА СЕ..." : "ИЗПРАТИ ПОРЪЧКАТА"} 🛒
               </Button>
             </form>
           </CardContent>
