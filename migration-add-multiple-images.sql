@@ -9,7 +9,7 @@ ADD COLUMN image_urls TEXT[] DEFAULT ARRAY[]::TEXT[];
 ALTER TABLE men_perfumes 
 ADD COLUMN image_urls TEXT[] DEFAULT ARRAY[]::TEXT[];
 
--- Migrate existing image_url data to image_urls array
+-- Migrate existing image_url data to image_urls array1
 UPDATE women_perfumes 
 SET image_urls = ARRAY[image_url] 
 WHERE image_url IS NOT NULL AND image_url != '';
