@@ -141,7 +141,7 @@ npm run dev
 ## Customization
 
 ### Adding New Products
-Edit `src/data/products.ts` to add new products to the catalog.
+Use the admin panel at `/admin/perfumes` to add new products to the catalog.
 
 ### Styling
 - Global styles: `src/app/globals.css`
@@ -176,3 +176,4 @@ npm run build
 
 This project is licensed under the MIT License.
 
+# parfume-store
