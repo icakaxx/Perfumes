@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import { CartProvider } from "@/contexts/CartContext";
 import { AdminAuthProvider } from "@/contexts/AdminAuthContext";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import "./globals.css";
 
 const inter = Inter({ 
@@ -36,16 +37,18 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans antialiased">
-        <AdminAuthProvider>
-          <CartProvider>
-            <div className="flex min-h-screen flex-col">
-              <NavBar />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </div>
-            <Toaster />
-          </CartProvider>
-        </AdminAuthProvider>
+        <ErrorBoundary>
+          <AdminAuthProvider>
+            <CartProvider>
+              <div className="flex min-h-screen flex-col">
+                <NavBar />
+                <main className="flex-1">{children}</main>
+                <Footer />
+              </div>
+              <Toaster />
+            </CartProvider>
+          </AdminAuthProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

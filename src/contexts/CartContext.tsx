@@ -34,7 +34,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       try {
         setItems(JSON.parse(savedCart));
       } catch (error) {
-        console.error('Error loading cart from localStorage:', error);
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Error loading cart from localStorage:', error);
+        }
       }
     }
     setIsHydrated(true);

@@ -488,7 +488,9 @@ function OrderEditModal({ order, onClose, onSave }: OrderEditModalProps) {
       onSave();
       onClose();
     } catch (err) {
-      console.error('Failed to update order:', err);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Failed to update order:', err);
+      }
     } finally {
       setSaving(false);
     }

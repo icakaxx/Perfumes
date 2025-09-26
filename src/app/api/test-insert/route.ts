@@ -1,15 +1,25 @@
 import { NextResponse } from 'next/server';
 
 export async function POST() {
+  // Only allow in development mode
+  if (process.env.NODE_ENV !== 'development') {
+    return NextResponse.json({ 
+      success: false,
+      error: 'This endpoint is only available in development mode'
+    }, { status: 403 });
+  }
+
   try {
     // Get environment variables directly
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-    console.log('Environment check:', {
-      supabaseUrl: supabaseUrl ? 'Present' : 'Missing',
-      supabaseAnonKey: supabaseAnonKey ? 'Present' : 'Missing'
-    });
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Environment check:', {
+        supabaseUrl: supabaseUrl ? 'Present' : 'Missing',
+        supabaseAnonKey: supabaseAnonKey ? 'Present' : 'Missing'
+      });
+    }
 
     if (!supabaseUrl || !supabaseAnonKey) {
       return NextResponse.json({ 
@@ -49,7 +59,9 @@ export async function POST() {
       rating: 4.5
     };
 
-    console.log('Attempting to insert test product:', testProduct);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Attempting to insert test product:', testProduct);
+    }
 
     // Try to insert the test product
     const { data, error } = await supabase
@@ -59,7 +71,9 @@ export async function POST() {
       .single();
 
     if (error) {
-      console.error('Supabase insert error:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Supabase insert error:', error);
+      }
       return NextResponse.json({ 
         success: false,
         error: error.message,
@@ -69,7 +83,9 @@ export async function POST() {
       }, { status: 500 });
     }
 
-    console.log('Successfully inserted test product:', data);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Successfully inserted test product:', data);
+    }
 
     return NextResponse.json({ 
       success: true,
@@ -78,7 +94,9 @@ export async function POST() {
     });
 
   } catch (error) {
-    console.error('API error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API error:', error);
+    }
     return NextResponse.json({ 
       success: false,
       error: 'Internal server error',
@@ -88,6 +106,14 @@ export async function POST() {
 }
 
 export async function GET() {
+  // Only allow in development mode
+  if (process.env.NODE_ENV !== 'development') {
+    return NextResponse.json({ 
+      success: false,
+      error: 'This endpoint is only available in development mode'
+    }, { status: 403 });
+  }
+
   try {
     // Get environment variables directly
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -111,7 +137,9 @@ export async function GET() {
       .limit(5);
 
     if (error) {
-      console.error('Supabase fetch error:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Supabase fetch error:', error);
+      }
       return NextResponse.json({ 
         success: false,
         error: error.message,
@@ -128,7 +156,9 @@ export async function GET() {
     });
 
   } catch (error) {
-    console.error('API error:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API error:', error);
+    }
     return NextResponse.json({ 
       success: false,
       error: 'Internal server error',

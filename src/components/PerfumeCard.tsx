@@ -68,7 +68,9 @@ export function PerfumeCard({ product }: PerfumeCardProps) {
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-110"
           onError={(e) => {
-            console.log('Image failed to load:', images[currentImageIndex]);
+            if (process.env.NODE_ENV === 'development') {
+              console.log('Image failed to load:', images[currentImageIndex]);
+            }
             // Try to load next image if current fails
             if (images.length > 1) {
               const nextIndex = (currentImageIndex + 1) % images.length;

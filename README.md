@@ -7,6 +7,8 @@ A modern, responsive e-commerce website for luxury perfumes built with Next.js 1
 - **Modern UI/UX**: Clean, elegant design with smooth animations
 - **Product Catalog**: Browse perfumes with advanced filtering and search
 - **Shopping Experience**: Add to cart, order placement, and order tracking
+- **Admin Panel**: Secure admin interface for managing products and orders
+- **Security**: Comprehensive security measures including CSRF protection, rate limiting, and secure authentication
 - **Responsive Design**: Works perfectly on desktop, tablet, and mobile
 - **Type Safety**: Full TypeScript support throughout the application
 - **Performance**: Optimized with Next.js App Router and Image optimization
@@ -67,12 +69,39 @@ cd perfumes
 npm install
 ```
 
-3. Run the development server:
+3. Set up environment variables:
+```bash
+# Create .env.local file with your configuration
+cp .env.example .env.local
+# Edit .env.local with your Supabase credentials and admin credentials
+```
+
+4. Run the development server:
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Environment Variables
+
+Create a `.env.local` file with the following variables:
+
+```bash
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url_here
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key_here
+
+# Admin Authentication (REQUIRED)
+ADMIN_USERNAME=your_secure_admin_username
+ADMIN_PASSWORD=your_secure_admin_password
+
+# Application Environment
+NODE_ENV=development
+```
+
+**⚠️ Important**: Set secure admin credentials before deploying to production!
 
 ## Available Scripts
 
@@ -111,8 +140,20 @@ npm run dev
 ## API Routes
 
 ### Orders API (`/api/orders`)
-- `POST` - Submit new order
+- `POST` - Submit new order (with CSRF protection)
 - `GET` - API health check
+
+### Admin API (`/api/admin`)
+- `POST /auth` - Admin login (with CSRF protection)
+- `DELETE /auth` - Admin logout
+- `GET /session` - Check admin session status
+
+### Security Features
+- **CSRF Protection**: All POST/DELETE endpoints protected
+- **Rate Limiting**: 100 requests per 15 minutes per IP
+- **Input Validation**: Zod schemas for all user inputs
+- **Secure Headers**: CSP, HSTS, X-Frame-Options, etc.
+- **Session Security**: httpOnly cookies with secure settings
 
 ## Features in Detail
 
