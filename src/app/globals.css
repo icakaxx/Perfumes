@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: 255 255 255;           /* #FFFFFF - pure white */
+    --fg: 15 17 21;              /* #0F1115 */
+    --accent: 120 53 15;         /* #78350F - warm amber */
+    --accent-hover: 240 5% 96%;  /* #F8F9FA - light gray */
+    --blush: 255 255 255;        /* #FFFFFF - pure white */
+    
+    --background: var(--bg);
+    --foreground: var(--fg);
+    
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: var(--fg);
+    
+    --card: 0 0% 100%;
+    --card-foreground: var(--fg);
+    
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    
+    --primary: var(--accent);
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: var(--blush);
+    --secondary-foreground: var(--fg);
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --ring: var(--accent);
+    
+    --radius: 0.5rem;
+  }
+  
+  .dark {
+    --bg: 255 255 255;           /* #FFFFFF - pure white */
+    --fg: 15 17 21;              /* #0F1115 */
+    
+    --background: var(--bg);
+    --foreground: var(--fg);
+    
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    
+    --popover: 240 10% 3.9%;
+    --popover-foreground: var(--fg);
+    
+    --card: 240 10% 3.9%;
+    --card-foreground: var(--fg);
+    
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    
+    --primary: var(--accent);
+    --primary-foreground: 240 5.9% 10%;
+    
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: var(--fg);
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+    
+    --ring: var(--accent);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-white text-foreground;
+  }
+  html {
+    @apply bg-white;
+  }
+  div, section, main, nav, footer, article, aside, header {
+    @apply bg-white;
+  }
+  
+  .font-serif {
+    font-family: var(--font-serif), serif;
+  }
+  
+  .font-sans {
+    font-family: var(--font-sans), sans-serif;
+  }
+  
+  .text-accent {
+    color: rgb(var(--accent));
+  }
+  
+  .bg-accent {
+    background-color: rgb(var(--accent));
+  }
+  
+  .bg-blush {
+    background-color: rgb(var(--blush));
+  }
+  
+  .border-accent {
+    border-color: rgb(var(--accent));
+  }
+}
+
+/* Smooth scrolling */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom focus styles */
+@layer utilities {
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-accent/50 focus:ring-offset-2;
+  }
+  
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
