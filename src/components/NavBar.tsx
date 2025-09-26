@@ -90,10 +90,14 @@ export function NavBar() {
         <div className="md:hidden flex items-center gap-2">
           {/* Mobile Cart Button */}
           <Link href="/cart">
-            <Button variant="outline" size="icon" className="relative">
-              <ShoppingCart className="h-5 w-5" />
+            <Button 
+              variant="outline" 
+              size="icon" 
+              className="relative bg-white border-2 border-gray-300 hover:border-gray-400 min-w-[40px] min-h-[40px] flex items-center justify-center"
+            >
+              <ShoppingCart className="h-5 w-5 text-gray-700" />
               {isHydrated && getTotalItems() > 0 && (
-                <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-accent text-white text-xs flex items-center justify-center">
+                <Badge className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-red-500 text-white text-xs flex items-center justify-center font-bold">
                   {getTotalItems()}
                 </Badge>
               )}
