@@ -258,30 +258,30 @@ export default function CartPage() {
 
           {/* Order Summary */}
           <div className="w-full sm:max-w-md sm:mx-auto">
-            <Card className="sticky bottom-4 sm:static sm:bottom-auto border-2 border-blue-500 bg-blue-50">
-              <CardHeader className="pb-3 sm:pb-6">
-                <CardTitle className="text-lg sm:text-xl">Обобщение на поръчката</CardTitle>
+            <Card className="sticky bottom-4 sm:static sm:bottom-auto shadow-lg border-0">
+              <CardHeader className="pb-3 sm:pb-6 bg-gradient-to-r from-amber-50 to-orange-50">
+                <CardTitle className="text-lg sm:text-xl text-gray-800">Обобщение на поръчката</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3 sm:space-y-4">
+              <CardContent className="space-y-4 sm:space-y-5 p-4 sm:p-6">
                 <div className="flex justify-between text-sm sm:text-base">
-                  <span>Продукти ({items.reduce((total, item) => total + item.quantity, 0)} бр.)</span>
-                  <span className="font-medium">{formatCurrency(totalPrice)}</span>
+                  <span className="text-gray-600">Продукти ({items.reduce((total, item) => total + item.quantity, 0)} бр.)</span>
+                  <span className="font-semibold text-gray-800">{formatCurrency(totalPrice)}</span>
                 </div>
                 <hr className="border-gray-200" />
                 <div className="flex justify-between text-base sm:text-lg font-bold">
-                  <span>Общо</span>
-                  <span>{formatCurrency(totalPrice)} + 8-10лв доставка с ЕКОНТ</span>
+                  <span className="text-gray-700">Общо</span>
+                  <span className="text-amber-600">{formatCurrency(totalPrice)} + 8-10лв доставка с ЕКОНТ</span>
                 </div>
                 
-                <div className="space-y-2 sm:space-y-3 pt-2">
+                <div className="space-y-3 pt-2">
                   <Link href="/order" className="block">
-                    <Button className="w-full bg-red-600 hover:bg-red-700 text-white text-sm sm:text-base py-4 sm:py-2 font-bold border-2 border-red-800">
-                      🛒 ПРОДЪЛЖИ КЪМ ПОРЪЧКА 🛒
+                    <Button className="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white text-sm sm:text-base py-4 sm:py-3 font-semibold shadow-md hover:shadow-lg transition-all duration-200 rounded-lg">
+                      Продължи към поръчка
                     </Button>
                   </Link>
                   
                   <Link href="/shop" className="block">
-                    <Button variant="outline" className="w-full text-sm sm:text-base py-3 sm:py-2">
+                    <Button variant="outline" className="w-full text-sm sm:text-base py-3 sm:py-2 border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-all duration-200">
                       Продължи пазаруването
                     </Button>
                   </Link>
