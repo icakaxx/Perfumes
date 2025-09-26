@@ -97,11 +97,6 @@ export default function AdminLoginPage() {
             </Button>
           </form>
           
-          <div className="mt-4 sm:mt-6 text-center">
-            <p className="text-xs sm:text-sm text-gray-500">
-              Конфигурирайте ADMIN_USERNAME и ADMIN_PASSWORD в .env файла
-            </p>
-          </div>
         </CardContent>
       </Card>
     </div>

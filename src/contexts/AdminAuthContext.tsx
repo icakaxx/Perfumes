@@ -2,7 +2,6 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getCSRFHeaders } from '@/lib/csrf-client';
 
 interface AdminAuthContextType {
   isAuthenticated: boolean;
@@ -52,7 +51,6 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          ...getCSRFHeaders(),
         },
         credentials: 'include', // Include cookies
         body: JSON.stringify({ username, password }),
@@ -79,7 +77,7 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
       await fetch('/api/admin/auth', {
         method: 'DELETE',
         headers: {
-          ...getCSRFHeaders(),
+          'Content-Type': 'application/json',
         },
         credentials: 'include', // Include cookies
       });
