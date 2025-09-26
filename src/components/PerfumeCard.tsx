@@ -171,8 +171,13 @@ export function PerfumeCard({ product }: PerfumeCardProps) {
       <CardFooter className="p-3 sm:p-4 pt-0">
         {availableVariants.length > 0 ? (
           <>
-            {/* Mobile Layout - Compact */}
-            <div className="flex flex-col md:hidden gap-2">
+            {/* Mobile Layout - DEBUG VERSION */}
+            <div className="flex flex-col md:hidden gap-2 border-2 border-red-500 bg-yellow-100 p-2">
+              {/* DEBUG INFO */}
+              <div className="text-xs text-red-600 font-bold text-center">
+                MOBILE LAYOUT ACTIVE - iPhone Debug
+              </div>
+              
               {/* Quantity Selector */}
               <div className="flex items-center justify-center gap-2">
                 <Button
@@ -180,32 +185,37 @@ export function PerfumeCard({ product }: PerfumeCardProps) {
                   size="sm"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   disabled={quantity <= 1}
-                  className="h-7 w-7 p-0"
+                  className="h-8 w-8 p-0 border-2 border-blue-500 bg-blue-100"
                 >
-                  <span className="text-xs">-</span>
+                  <span className="text-sm font-bold">-</span>
                 </Button>
-                <span className="text-sm font-medium min-w-[20px] text-center">
+                <span className="text-sm font-medium min-w-[20px] text-center bg-green-100 px-2 py-1 rounded">
                   {quantity}
                 </span>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => setQuantity(quantity + 1)}
-                  className="h-7 w-7 p-0"
+                  className="h-8 w-8 p-0 border-2 border-blue-500 bg-blue-100"
                 >
-                  <span className="text-xs">+</span>
+                  <span className="text-sm font-bold">+</span>
                 </Button>
               </div>
               
-              {/* Add to Cart Button */}
+              {/* Add to Cart Button - SUPER OBVIOUS */}
               <Button
                 onClick={handleAddToCart}
                 size="sm"
-                className="w-full bg-accent hover:bg-accent/90 text-white text-xs h-8"
+                className="w-full bg-red-600 hover:bg-red-700 text-white text-sm h-12 border-4 border-red-800 font-bold shadow-lg"
               >
-                <ShoppingCart className="h-3 w-3 mr-1" />
-                Добави
+                <ShoppingCart className="h-5 w-5 mr-2" />
+                🛒 ДОБАВИ В КОЛИЧКАТА 🛒
               </Button>
+              
+              {/* DEBUG INFO */}
+              <div className="text-xs text-red-600 text-center">
+                Available variants: {availableVariants.length}
+              </div>
             </div>
 
             {/* Desktop Layout */}
