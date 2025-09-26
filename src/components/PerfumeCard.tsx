@@ -171,8 +171,8 @@ export function PerfumeCard({ product }: PerfumeCardProps) {
       <CardFooter className="p-3 sm:p-4 pt-0">
         {availableVariants.length > 0 ? (
           <>
-            {/* Mobile Layout - Force vertical stacking */}
-            <div className="flex flex-col sm:hidden gap-3">
+            {/* Mobile Layout - Compact */}
+            <div className="flex flex-col md:hidden gap-2">
               {/* Quantity Selector */}
               <div className="flex items-center justify-center gap-2">
                 <Button
@@ -180,20 +180,20 @@ export function PerfumeCard({ product }: PerfumeCardProps) {
                   size="sm"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   disabled={quantity <= 1}
-                  className="border-gray-300 bg-white hover:bg-gray-50 hover:border-gray-400 text-gray-700 h-8 w-8 flex items-center justify-center"
+                  className="h-7 w-7 p-0"
                 >
-                  <span className="text-sm font-bold">-</span>
+                  <span className="text-xs">-</span>
                 </Button>
-                <span className="text-sm font-medium min-w-[20px] text-center text-gray-700">
+                <span className="text-sm font-medium min-w-[20px] text-center">
                   {quantity}
                 </span>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => setQuantity(quantity + 1)}
-                  className="border-gray-300 bg-white hover:bg-gray-50 hover:border-gray-400 text-gray-700 h-8 w-8 flex items-center justify-center"
+                  className="h-7 w-7 p-0"
                 >
-                  <span className="text-sm font-bold">+</span>
+                  <span className="text-xs">+</span>
                 </Button>
               </div>
               
@@ -201,7 +201,7 @@ export function PerfumeCard({ product }: PerfumeCardProps) {
               <Button
                 onClick={handleAddToCart}
                 size="sm"
-                className="w-full bg-accent hover:bg-accent/90 text-white text-sm h-9"
+                className="w-full bg-accent hover:bg-accent/90 text-white text-xs h-8"
               >
                 <ShoppingCart className="h-3 w-3 mr-1" />
                 Добави
@@ -209,7 +209,7 @@ export function PerfumeCard({ product }: PerfumeCardProps) {
             </div>
 
             {/* Desktop Layout */}
-            <div className="hidden sm:flex gap-2 w-full">
+            <div className="hidden md:flex gap-2 w-full">
               {/* Quantity Selector */}
               <div className="flex items-center gap-2">
                 <Button
