@@ -1,0 +1,159 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { CheckCircle, Package, Home, ShoppingBag } from "lucide-react";
+import { formatCurrency } from "@/lib/format";
+import { useDatabaseProducts } from "@/hooks/useDatabaseProducts";
+import { getSecureStorage } from "@/lib/secure-storage";
+
+interface OrderSummary {
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  address: string;
+  phone: string;
+  productId: string;
+  variantId: string;
+  quantity: number;
+  totalPrice: number;
+  timestamp: string;
+  orderId: string;
+}
+
+export default function SuccessPage() {
+  const router = useRouter();
+  const { products, loading } = useDatabaseProducts();
+  const [orderData, setOrderData] = useState<OrderSummary | null>(null);
+
+  useEffect(() => {
+    const savedOrder = getSecureStorage("lastOrder");
+    if (savedOrder) {
+      setOrderData(savedOrder);
+    } else {
+      router.push("/");
+    }
+  }, [router]);
+
+  if (!orderData || loading) {
+    return (
+      <div className="container py-16 text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mx-auto mb-4"></div>
+        <p className="text-muted-foreground">Зареждане на детайлите за поръчката...</p>
+      </div>
+    );
+  }
+
+  const product = products.find(p => p.id === orderData.productId);
+  const variant = product?.variants.find(v => v.id === orderData.variantId);
+
+  return (
+    <div className="container py-8 max-w-2xl">
+      {/* Success Header */}
+      <div className="text-center mb-8">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+          <CheckCircle className="h-10 w-10 text-green-600" />
+        </div>
+        <h1 className="font-serif text-3xl font-bold mb-2">
+          Поръчката е потвърдена!
+        </h1>
+        <p className="text-muted-foreground">
+          Благодарим за поръчката. Ще я обработим скоро.
+        </p>
+      </div>
+
+      {/* Order Details Card */}
+      <Card className="p-6 mb-6">
+        <div className="space-y-4">
+          <div>
+            <p className="text-sm text-muted-foreground mb-1">ID на поръчката</p>
+            <p className="font-mono font-semibold">{orderData.orderId}</p>
+          </div>
+
+          <div className="pt-4 border-t">
+            <p className="text-sm text-muted-foreground mb-3">Информация за клиента</p>
+            <div className="space-y-1">
+              <p className="font-medium">
+                {orderData.firstName} {orderData.middleName} {orderData.lastName}
+              </p>
+              <p className="text-sm text-muted-foreground">{orderData.phone}</p>
+              <p className="text-sm text-muted-foreground">{orderData.address}</p>
+            </div>
+          </div>
+
+          {product && variant && (
+            <div className="pt-4 border-t">
+              <p className="text-sm text-muted-foreground mb-3">Детайли за продукта</p>
+              <div className="flex justify-between items-start">
+                <div>
+                  <p className="font-medium">{product.name}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {product.brand} • {variant.volumeMl}ml • Количество: {orderData.quantity}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-lg font-bold text-accent">
+                    {formatCurrency(orderData.totalPrice)}
+                  </p>
+                  <p className="text-xs text-muted-foreground">вкл. ДДС</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="pt-4 border-t">
+            <div className="flex items-center gap-2 text-sm">
+              <Package className="h-4 w-4 text-muted-foreground" />
+              <p>
+                Очаквана доставка: <span className="font-medium">3-5 работни дни</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      {/* What's Next */}
+      <Card className="p-6 mb-6 bg-accent/5 border-accent/20">
+        <h2 className="font-semibold mb-3">Какво се случва след това?</h2>
+        <ol className="space-y-2 text-sm">
+          <li className="flex gap-2">
+            <span className="text-accent font-bold">1.</span>
+            Ще получите имейл за потвърждение на поръчката скоро
+          </li>
+          <li className="flex gap-2">
+            <span className="text-accent font-bold">2.</span>
+            Ще опаковаме внимателно вашия парфюм с нашата фирмена подаръчна опаковка
+          </li>
+          <li className="flex gap-2">
+            <span className="text-accent font-bold">3.</span>
+            Ще получите номер за проследяване, когато поръчката бъде изпратена
+          </li>
+          <li className="flex gap-2">
+            <span className="text-accent font-bold">4.</span>
+            Вашият аромат ще пристигне в рамките на 3-5 работни дни
+          </li>
+        </ol>
+      </Card>
+
+      {/* Actions */}
+      <div className="flex gap-3">
+        <Link href="/" className="flex-1">
+          <Button variant="outline" className="w-full">
+            <Home className="h-4 w-4 mr-2" />
+            Начало
+          </Button>
+        </Link>
+        <Link href="/shop" className="flex-1">
+          <Button className="w-full bg-accent hover:bg-accent/90 text-white">
+            <ShoppingBag className="h-4 w-4 mr-2" />
+            Продължи Пазаруването
+          </Button>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
