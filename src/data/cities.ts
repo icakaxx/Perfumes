@@ -34,3 +34,4 @@ export const cities: City[] = [
   { id: 27, name: "Търговище", code: "TAR" },
 ];
 
+

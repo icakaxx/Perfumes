@@ -44,8 +44,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   // Save cart to localStorage whenever items change
   useEffect(() => {
-    localStorage.setItem('perfume-cart', JSON.stringify(items));
-  }, [items]);
+    if (isHydrated) {
+      localStorage.setItem('perfume-cart', JSON.stringify(items));
+    }
+  }, [items, isHydrated]);
 
   const addItem = (newItem: Omit<CartItem, 'productName' | 'variantVolume' | 'price'>) => {
     setItems(prevItems => {

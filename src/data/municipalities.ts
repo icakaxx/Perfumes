@@ -108,3 +108,4 @@ export const municipalities: Municipality[] = [
   { id: 101, name: "Ловеч", region_id: 22, postal_code_prefix: null },
 ];
 
+

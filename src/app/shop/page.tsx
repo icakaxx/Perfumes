@@ -322,7 +322,7 @@ function ShopContent() {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-12 sm:py-16">
+        <div className="flex flex-col items-center justify-center">
           <p className="text-base sm:text-lg text-muted-foreground mb-4 text-center px-4">
             Не са намерени продукти, отговарящи на вашите критерии
           </p>

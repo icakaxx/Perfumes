@@ -19,6 +19,7 @@ export function NavBar() {
   const navItems = [
     { href: "/za-neya", label: "ЗА НЕЯ" },
     { href: "/za-nego", label: "ЗА НЕГО" },
+    { href: "/podaruchni-komplekti", label: "ПОДАРЪЧНИ КОМПЛЕКТИ" },
   ];
 
   return (
@@ -36,12 +37,13 @@ export function NavBar() {
             const isActive = pathname === item.href;
             const isZaNeya = item.label === "ЗА НЕЯ";
             const isZaNego = item.label === "ЗА НЕГО";
+            const isGiftSets = item.label === "ПОДАРЪЧНИ КОМПЛЕКТИ";
             
             let colorClass = "text-muted-foreground";
             if (isActive) {
-              colorClass = isZaNeya ? "text-pink-600" : isZaNego ? "text-blue-600" : "text-accent";
+              colorClass = isZaNeya ? "text-pink-600" : isZaNego ? "text-blue-600" : isGiftSets ? "text-purple-600" : "text-accent";
             } else {
-              colorClass = isZaNeya ? "text-pink-500 hover:text-pink-600" : isZaNego ? "text-blue-500 hover:text-blue-600" : "text-muted-foreground hover:text-accent";
+              colorClass = isZaNeya ? "text-pink-500 hover:text-pink-600" : isZaNego ? "text-blue-500 hover:text-blue-600" : isGiftSets ? "text-purple-500 hover:text-purple-600" : "text-muted-foreground hover:text-accent";
             }
             
             return (
@@ -121,12 +123,13 @@ export function NavBar() {
                 const isActive = pathname === item.href;
                 const isZaNeya = item.label === "ЗА НЕЯ";
                 const isZaNego = item.label === "ЗА НЕГО";
+                const isGiftSets = item.label === "ПОДАРЪЧНИ КОМПЛЕКТИ";
                 
                 let colorClass = "text-foreground";
                 if (isActive) {
-                  colorClass = isZaNeya ? "text-pink-600" : isZaNego ? "text-blue-600" : "text-accent";
+                  colorClass = isZaNeya ? "text-pink-600" : isZaNego ? "text-blue-600" : isGiftSets ? "text-purple-600" : "text-accent";
                 } else {
-                  colorClass = isZaNeya ? "text-pink-500 hover:text-pink-600" : isZaNego ? "text-blue-500 hover:text-blue-600" : "text-foreground hover:text-accent";
+                  colorClass = isZaNeya ? "text-pink-500 hover:text-pink-600" : isZaNego ? "text-blue-500 hover:text-blue-600" : isGiftSets ? "text-purple-500 hover:text-purple-600" : "text-foreground hover:text-accent";
                 }
                 
                 return (

@@ -15,7 +15,7 @@ export function Footer() {
   const { isAuthenticated: isAdmin } = useAdminAuth();
   
   return (
-    <footer className="bg-gradient-section border-t relative">
+    <footer className="bg-gray-50 border-t relative">
       {/* Admin Gear Button */}
       <Link 
         href="/admin/login"

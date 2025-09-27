@@ -177,16 +177,8 @@
     background: var(--gradient-secondary);
   }
   
-  .bg-gradient-hero {
-    background: var(--gradient-hero);
-  }
-  
   .bg-gradient-card {
     background: var(--gradient-card);
-  }
-  
-  .bg-gradient-section {
-    background: var(--gradient-section);
   }
   
   /* Smooth transitions */
