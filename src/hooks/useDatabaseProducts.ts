@@ -37,10 +37,11 @@ export function useDatabaseProducts() {
       setLoading(true);
       setError(null);
 
-      // Fetch from both women's and men's tables
-      const [womenResponse, menResponse] = await Promise.all([
+      // Fetch from women's, men's, and gift sets tables
+      const [womenResponse, menResponse, giftSetsResponse] = await Promise.all([
         fetch('/api/women-perfumes'),
-        fetch('/api/men-perfumes')
+        fetch('/api/men-perfumes'),
+        fetch('/api/gift-sets')
       ]);
 
       // Check each response individually for better error reporting
@@ -60,8 +61,17 @@ export function useDatabaseProducts() {
         throw new Error(`Failed to fetch men's perfumes: ${menResponse.status} - ${menError.error || 'Unknown error'}`);
       }
 
+      if (!giftSetsResponse.ok) {
+        const giftSetsError = await giftSetsResponse.json().catch(() => ({ error: 'Unknown error' }));
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Gift sets API error:', giftSetsResponse.status, giftSetsError);
+        }
+        throw new Error(`Failed to fetch gift sets: ${giftSetsResponse.status} - ${giftSetsError.error || 'Unknown error'}`);
+      }
+
       const womenData = await womenResponse.json();
       const menData = await menResponse.json();
+      const giftSetsData = await giftSetsResponse.json();
 
       // Transform database format to frontend format
       const allProducts: Product[] = [
@@ -89,6 +99,21 @@ export function useDatabaseProducts() {
           imageUrls: p.image_urls || (p.image_url ? [p.image_url] : []), // New multiple images
           concentration: p.concentration,
           genderProfile: "Masculine" as const,
+          topNotes: p.top_notes,
+          heartNotes: p.heart_notes,
+          baseNotes: p.base_notes,
+          variants: p.variants,
+          rating: p.rating
+        })),
+        ...giftSetsData.map((p: any) => ({
+          id: p.id,
+          name: p.name,
+          brand: p.brand,
+          description: p.description,
+          imageUrl: p.image_url, // Keep for backward compatibility
+          imageUrls: p.image_urls || (p.image_url ? [p.image_url] : []), // New multiple images
+          concentration: p.concentration,
+          genderProfile: "Unisex" as const, // Gift sets are typically unisex
           topNotes: p.top_notes,
           heartNotes: p.heart_notes,
           baseNotes: p.base_notes,

@@ -17,3 +17,4 @@ export default function TestClient() {
 
   return <pre>{err ?? JSON.stringify(rows, null, 2)}</pre>;
 }
+

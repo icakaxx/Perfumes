@@ -31,7 +31,7 @@ interface Perfume {
 
 interface PerfumeFormProps {
   perfume?: Perfume | null;
-  type: 'women' | 'men';
+  type: 'women' | 'men' | 'gift-sets';
   onClose: () => void;
 }
 
@@ -158,7 +158,8 @@ export function PerfumeForm({ perfume, type, onClose }: PerfumeFormProps) {
     setError(null);
 
     try {
-      const endpoint = type === 'women' ? '/api/women-perfumes' : '/api/men-perfumes';
+      const endpoint = type === 'women' ? '/api/women-perfumes' : 
+                      type === 'men' ? '/api/men-perfumes' : '/api/gift-sets';
       const method = perfume ? 'PUT' : 'POST';
       
       const payload = perfume 
@@ -192,7 +193,10 @@ export function PerfumeForm({ perfume, type, onClose }: PerfumeFormProps) {
         <CardHeader className="sticky top-0 bg-white z-10 border-b">
           <div className="flex justify-between items-center">
             <CardTitle className="text-lg sm:text-xl">
-              {perfume ? 'Редактиране на парфюм' : 'Добавяне на нов парфюм'}
+              {perfume ? 
+                (type === 'gift-sets' ? 'Редактиране на комплект' : 'Редактиране на парфюм') : 
+                (type === 'gift-sets' ? 'Добавяне на нов комплект' : 'Добавяне на нов парфюм')
+              }
             </CardTitle>
             <Button variant="outline" size="sm" onClick={onClose}>
               <X className="h-4 w-4" />
@@ -468,7 +472,7 @@ export function PerfumeForm({ perfume, type, onClose }: PerfumeFormProps) {
                 Cancel
               </Button>
               <Button type="submit" disabled={loading}>
-                {loading ? 'Saving...' : (perfume ? 'Update' : 'Add')} Perfume
+                {loading ? 'Saving...' : (perfume ? 'Update' : 'Add')} {type === 'gift-sets' ? 'Gift Set' : 'Perfume'}
               </Button>
             </div>
           </form>

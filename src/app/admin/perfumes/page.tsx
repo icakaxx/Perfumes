@@ -28,11 +28,12 @@ interface Perfume {
 export default function PerfumesAdmin() {
   const [womenPerfumes, setWomenPerfumes] = useState<Perfume[]>([]);
   const [menPerfumes, setMenPerfumes] = useState<Perfume[]>([]);
+  const [giftSets, setGiftSets] = useState<Perfume[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [editingPerfume, setEditingPerfume] = useState<Perfume | null>(null);
-  const [activeTab, setActiveTab] = useState<'women' | 'men'>('women');
+  const [activeTab, setActiveTab] = useState<'women' | 'men' | 'gift-sets'>('women');
 
   useEffect(() => {
     fetchPerfumes();
@@ -43,20 +44,23 @@ export default function PerfumesAdmin() {
       setLoading(true);
       setError(null);
 
-      const [womenResponse, menResponse] = await Promise.all([
+      const [womenResponse, menResponse, giftSetsResponse] = await Promise.all([
         fetch('/api/women-perfumes'),
-        fetch('/api/men-perfumes')
+        fetch('/api/men-perfumes'),
+        fetch('/api/gift-sets')
       ]);
 
-      if (!womenResponse.ok || !menResponse.ok) {
+      if (!womenResponse.ok || !menResponse.ok || !giftSetsResponse.ok) {
         throw new Error('Failed to fetch perfumes');
       }
 
       const womenData = await womenResponse.json();
       const menData = await menResponse.json();
+      const giftSetsData = await giftSetsResponse.json();
 
       setWomenPerfumes(womenData);
       setMenPerfumes(menData);
+      setGiftSets(giftSetsData);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
@@ -64,13 +68,14 @@ export default function PerfumesAdmin() {
     }
   };
 
-  const handleDelete = async (id: string, type: 'women' | 'men') => {
+  const handleDelete = async (id: string, type: 'women' | 'men' | 'gift-sets') => {
     if (!confirm('Are you sure you want to delete this perfume?')) {
       return;
     }
 
     try {
-      const endpoint = type === 'women' ? '/api/women-perfumes' : '/api/men-perfumes';
+      const endpoint = type === 'women' ? '/api/women-perfumes' : 
+                      type === 'men' ? '/api/men-perfumes' : '/api/gift-sets';
       const response = await fetch(`${endpoint}?id=${id}`, {
         method: 'DELETE'
       });
@@ -102,7 +107,8 @@ export default function PerfumesAdmin() {
     fetchPerfumes(); // Refresh the list
   };
 
-  const currentPerfumes = activeTab === 'women' ? womenPerfumes : menPerfumes;
+  const currentPerfumes = activeTab === 'women' ? womenPerfumes : 
+                         activeTab === 'men' ? menPerfumes : giftSets;
 
   if (loading) {
     return (
@@ -139,21 +145,31 @@ export default function PerfumesAdmin() {
           </Link>
         </div>
         <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-          <Button onClick={fetchPerfumes} variant="outline" className="text-sm sm:text-base h-9 sm:h-10">
+          <Button onClick={fetchPerfumes} variant="outline" className="text-sm sm:text-base h-9 sm:h-10 flex-shrink-0">
             <RefreshCw className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
             Обнови
           </Button>
-          <Button onClick={handleAddNew} className="text-sm sm:text-base h-9 sm:h-10">
+          <Button onClick={handleAddNew} className="text-sm sm:text-base h-9 sm:h-10 flex-shrink-0">
             <Plus className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
-            Добави Парфюм
+            <span className="hidden sm:inline">
+              {activeTab === 'gift-sets' ? 'Добави Комплект' : 'Добави Парфюм'}
+            </span>
+            <span className="sm:hidden">
+              {activeTab === 'gift-sets' ? 'Добави' : 'Добави'}
+            </span>
           </Button>
         </div>
       </div>
 
-      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'women' | 'men')}>
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="women" className="text-xs sm:text-sm">Женски ({womenPerfumes.length})</TabsTrigger>
-          <TabsTrigger value="men" className="text-xs sm:text-sm">Мъжки ({menPerfumes.length})</TabsTrigger>
+      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'women' | 'men' | 'gift-sets')}>
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="women" className="text-xs sm:text-sm truncate">Женски ({womenPerfumes.length})</TabsTrigger>
+          <TabsTrigger value="men" className="text-xs sm:text-sm truncate">Мъжки ({menPerfumes.length})</TabsTrigger>
+          <TabsTrigger value="gift-sets" className="text-xs sm:text-sm truncate">
+            <span className="hidden sm:inline">Подаръчни Комплекти</span>
+            <span className="sm:hidden">Комплекти</span>
+            <span className="ml-1">({giftSets.length})</span>
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="women" className="mt-4 sm:mt-6">
@@ -173,6 +189,15 @@ export default function PerfumesAdmin() {
             onDelete={handleDelete}
           />
         </TabsContent>
+
+        <TabsContent value="gift-sets" className="mt-4 sm:mt-6">
+          <PerfumeGrid 
+            perfumes={giftSets} 
+            type="gift-sets"
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        </TabsContent>
       </Tabs>
 
       {showForm && (
@@ -188,9 +213,9 @@ export default function PerfumesAdmin() {
 
 interface PerfumeGridProps {
   perfumes: Perfume[];
-  type: 'women' | 'men';
+  type: 'women' | 'men' | 'gift-sets';
   onEdit: (perfume: Perfume) => void;
-  onDelete: (id: string, type: 'women' | 'men') => void;
+  onDelete: (id: string, type: 'women' | 'men' | 'gift-sets') => void;
 }
 
 function PerfumeGrid({ perfumes, type, onEdit, onDelete }: PerfumeGridProps) {
@@ -199,7 +224,7 @@ function PerfumeGrid({ perfumes, type, onEdit, onDelete }: PerfumeGridProps) {
       <Card>
         <CardContent className="text-center py-6 sm:py-8">
           <p className="text-gray-500 text-sm sm:text-base">
-            Няма {type === 'women' ? 'женски' : 'мъжки'} парфюми. Добавете някои за да започнете!
+            Няма {type === 'women' ? 'женски' : type === 'men' ? 'мъжки' : 'подаръчни комплекти'} парфюми. Добавете някои за да започнете!
           </p>
         </CardContent>
       </Card>
@@ -207,7 +232,7 @@ function PerfumeGrid({ perfumes, type, onEdit, onDelete }: PerfumeGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+    <div className="grid grid-cols-1 gap-3">
       {perfumes.map((perfume) => (
         <Card key={perfume.id} className="group">
           <CardHeader className="pb-2 sm:pb-3 p-3 sm:p-6">
@@ -222,6 +247,7 @@ function PerfumeGrid({ perfumes, type, onEdit, onDelete }: PerfumeGridProps) {
                   variant="outline"
                   onClick={() => onEdit(perfume)}
                   className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity h-7 w-7 sm:h-8 sm:w-8 p-0"
+                  title="Редактирай"
                 >
                   <Edit className="h-3 w-3" />
                 </Button>
@@ -230,6 +256,7 @@ function PerfumeGrid({ perfumes, type, onEdit, onDelete }: PerfumeGridProps) {
                   variant="outline"
                   onClick={() => onDelete(perfume.id, type)}
                   className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity text-red-600 hover:text-red-700 h-7 w-7 sm:h-8 sm:w-8 p-0"
+                  title="Изтрий"
                 >
                   <Trash2 className="h-3 w-3" />
                 </Button>

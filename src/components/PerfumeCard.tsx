@@ -60,7 +60,7 @@ export function PerfumeCard({ product }: PerfumeCardProps) {
   };
 
   return (
-    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg w-full">
+    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg w-full flex flex-col h-full">
       <div className="relative aspect-square overflow-hidden">
         <Image
           src={images[currentImageIndex]}
@@ -133,8 +133,8 @@ export function PerfumeCard({ product }: PerfumeCardProps) {
         )}
       </div>
       
-      <CardContent className="p-3 sm:p-4">
-        <div className="space-y-2 sm:space-y-3">
+      <CardContent className="p-3 sm:p-4 flex-1 flex flex-col">
+        <div className="space-y-2 sm:space-y-3 flex-1">
           {/* Product Name */}
           <div>
             <h3 className="font-semibold text-base sm:text-lg leading-tight">{product.name}</h3>
@@ -170,7 +170,7 @@ export function PerfumeCard({ product }: PerfumeCardProps) {
         </div>
       </CardContent>
       
-      <CardFooter className="p-3 sm:p-4 pt-0">
+      <CardFooter className="p-3 sm:p-4 pt-0 mt-auto">
         {availableVariants.length > 0 ? (
           <>
             {/* Mobile Layout - Mobile-Friendly */}
